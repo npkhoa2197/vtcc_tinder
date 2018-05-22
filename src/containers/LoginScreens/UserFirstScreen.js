@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
 import MyButton from '../../components/common/MyButton';
 
 const styles = StyleSheet.create({
@@ -22,7 +23,9 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   footerContainer: {
+    height: 180,
     marginBottom: 23,
+    justifyContent: 'space-around',
     alignSelf: 'stretch',
   },
   footerTextContainer: {
@@ -68,14 +71,22 @@ const styles = StyleSheet.create({
 const backgroundImage = require('../../assets/images/loginScreens/loginScreenBackground.png');
 const bodyImage = require('../../assets/images/loginScreens/loginScreenBodyImage.png');
 const logo = require('../../assets/images/loginScreens/logo.png');
+const fbLogo = require('../../assets/images/loginScreens/fbLogo.png');
 
 class UserFirstScreen extends React.PureComponent {
+  static propTypes = {
+    navigation: PropTypes.shape({
+      navigate: PropTypes.func.isRequired,
+    }).isRequired,
+  };
   handleLoginPress = () => {};
-
+  handleRegisterPress = () => {
+    this.props.navigation.navigate('RegisterScreen');
+  };
   render() {
     return (
       <View style={styles.container}>
-        <Image style={styles.backgroundImageStyle} source={backgroundImage} />
+        <Image style={styles.backgroundImageStyle} source={backgroundImage} resizeMode="contain" />
         <Image style={styles.bodyImage} source={bodyImage} />
         <View style={styles.headerContainer}>
           <Image style={styles.logo} source={logo} />
@@ -97,10 +108,16 @@ class UserFirstScreen extends React.PureComponent {
             color="rgb(255, 255, 255)"
             textColor="rgb(63, 81, 181)"
             size="small"
+            icon={fbLogo}
           />
           <View style={styles.footerTextContainer}>
-            <Text style={styles.orText}>Hoặc</Text>
-            <Text style={styles.registerText}>Đăng ký tài khoản mới</Text>
+            <Text style={styles.orText}>hoặc</Text>
+            <Text
+              style={[styles.registerText, { marginTop: 8 }]}
+              onPress={this.handleRegisterPress}
+            >
+              Đăng ký tài khoản mới
+            </Text>
           </View>
         </View>
       </View>

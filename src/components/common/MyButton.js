@@ -19,15 +19,13 @@ const styles = StyleSheet.create({
     height: 24,
   },
   btnTextStyle: {
-    fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 18,
   },
   iconStyleLarge: {
     width: 32,
     height: 32,
   },
   btnTextStyleLarge: {
-    fontWeight: 'bold',
     fontSize: 30,
   },
 });
@@ -38,7 +36,7 @@ const renderIcon = (icon, text, size) => {
       <Image
         style={[
           size === 'small' ? styles.iconStyle : styles.iconStyleLarge,
-          { marginRight: text !== '' ? 5 : 0 },
+          { marginRight: text !== '' ? 16 : 0 },
         ]}
         source={icon}
       />

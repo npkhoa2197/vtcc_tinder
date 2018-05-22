@@ -3,9 +3,25 @@ import FriendsScreen from '../containers/FriendsScreen';
 import SwipeHotgirlListScreen from '../containers/SwipeHotgirlListScreen';
 import ChatScreen from '../containers/ChatScreen';
 import UserFirstScreen from '../containers/LoginScreens/UserFirstScreen';
+import UserRegisterScreen from '../containers/LoginScreens/UserRegisterScreen';
 
 const AuthStack = createStackNavigator({
   UserFirstScreen: { screen: UserFirstScreen, navigationOptions: { header: null } },
+  RegisterScreen: {
+    screen: UserRegisterScreen,
+    navigationOptions: {
+      title: 'Đăng ký tài khoản',
+      headerStyle: {
+        position: 'absolute',
+        backgroundColor: 'transparent',
+        zIndex: 100,
+        top: 0,
+        left: 0,
+        right: 0,
+        borderBottomWidth: 0,
+      },
+    },
+  },
 });
 
 const Home = createStackNavigator(
