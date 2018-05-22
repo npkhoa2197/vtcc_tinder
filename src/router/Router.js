@@ -1,11 +1,11 @@
 import { createStackNavigator, createSwitchNavigator } from 'react-navigation';
-import OnboardScreen from '../containers/OnboardScreen';
 import FriendsScreen from '../containers/FriendsScreen';
 import SwipeHotgirlListScreen from '../containers/SwipeHotgirlListScreen';
 import ChatScreen from '../containers/ChatScreen';
+import UserFirstScreen from '../containers/LoginScreens/UserFirstScreen';
 
 const AuthStack = createStackNavigator({
-  OnboardScreen: { screen: OnboardScreen, navigationOptions: { header: null } },
+  UserFirstScreen: { screen: UserFirstScreen, navigationOptions: { header: null } },
 });
 
 const Home = createStackNavigator(

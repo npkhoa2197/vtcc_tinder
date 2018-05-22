@@ -63,7 +63,7 @@ const MyButton = ({
   onPress, text, icon, color, size, textColor,
 }) => (
   <TouchableOpacity onPress={onPress}>
-    <View style={[styles.buttonStyle, { backgroundColor: color }]}>
+    <View style={[styles.buttonStyle, { backgroundColor: color, borderColor: color }]}>
       {renderIcon(icon, text, size)}
       {renderText(text, size, textColor)}
     </View>

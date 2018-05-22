@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import firebase from 'firebase';
 import CommentsList from '../components/VerticalList';
 import CustomTextInput from '../components/CustomTextInput';
-import MyButton from '../components/MyButton';
+import MyButton from '../components/common/MyButton';
 import { requestHotgirlComments, stopRequestHotgirlComments, receiveUsername } from '../actions';
 import { COMMENT, SEND_BUTTON, COMMENT_PLACEHOLDER } from '../constants/strings';
 import { COMMENT_SEND_BUTTON_COLOR } from '../constants/colors';

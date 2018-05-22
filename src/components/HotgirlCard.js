@@ -11,7 +11,7 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import MyButton from './MyButton';
+import MyButton from './common/MyButton';
 import CommentList from './CommentList';
 import { COMMENT_BUTTON, I_WANT_BUTTON } from '../constants/strings';
 import AnimatedHeart from './AnimatedHeart';
