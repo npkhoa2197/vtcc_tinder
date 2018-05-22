@@ -1,0 +1,17 @@
+import { all } from 'redux-saga/effects';
+import { watchLogin } from './loginSagas';
+import { watchFriendsRequest, watchMyFriendsRequest } from './friendsSagas';
+import { watchFetchHotgirls } from './hotgirlsSagas';
+import { watchCommentsRequest } from './hotgirlCommentsSagas';
+import { watchChatRequest } from './chatSagas';
+
+export default function* rootSaga() {
+  yield all([
+    watchLogin(),
+    watchFriendsRequest(),
+    watchMyFriendsRequest(),
+    watchFetchHotgirls(),
+    watchCommentsRequest(),
+    watchChatRequest(),
+  ]);
+}

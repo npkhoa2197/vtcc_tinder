@@ -1,0 +1,4 @@
+export const COMMENT_SEND_BUTTON_COLOR = '#0054A5';
+export const FOOTER_LOGIN_BUTTON_COLOR = '#0054A5';
+export const LOADING_SPINNER_COLOR = '#0054A5';
+export const LOGIN_BUTTON_COLOR = '#0054A5';
