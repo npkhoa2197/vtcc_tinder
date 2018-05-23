@@ -14,7 +14,7 @@ class ChatRequestScreen extends React.PureComponent {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Chức năng này hiện chưa có</Text>
+        <Text>Chức năng này hiện chưa cóaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</Text>
       </View>
     );
   }

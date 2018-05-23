@@ -6,22 +6,34 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    paddingTop: 19,
+    paddingBottom: 18,
+    marginLeft: 10,
+    marginRight: 16,
   },
   leftContainer: {
     flexDirection: 'row',
-    marginLeft: 10,
   },
   innerContainer: {
-    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'flex-start',
+    marginLeft: 12,
   },
-  rightContainer: {
-    marginRight: 10,
-  },
-  avatarStyle: {
+  rightContainer: {},
+  avatar: {
     width: 35,
     height: 35,
+  },
+  name: {
+    fontSize: 16,
+    marginBottom: 2,
+    color: 'rgb(48, 49, 55)',
+  },
+  body: {
+    fontSize: 13,
+  },
+  time: {
+    fontSize: 12,
   },
 });
 
@@ -34,14 +46,14 @@ const ChatMessageItem = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.leftContainer}>
-        <Image style={styles.avatarStyle} source={avatar} />
+        <Image style={styles.avatar} source={avatar} />
         <View style={styles.innerContainer}>
-          <Text>{name}</Text>
-          <Text>{body}</Text>
+          <Text style={styles.name}>{name}</Text>
+          <Text style={styles.body}>{body}</Text>
         </View>
       </View>
-      <View style={styles.rightContainer}>
-        <Text>{time}</Text>
+      <View>
+        <Text style={styles.time}>{time}</Text>
       </View>
     </View>
   );
@@ -52,6 +64,7 @@ ChatMessageItem.propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,
+    time: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,
   }).isRequired,
 };

@@ -14,12 +14,11 @@ const styles = StyleSheet.create({
   labelStyle: {
     fontSize: 14,
     color: 'rgb(63, 81, 181)',
-    paddingTop: 16,
-    paddingBottom: 16,
   },
   tabBarStyle: {
-    height: 56,
     backgroundColor: '#FFF',
+    paddingTop: 10,
+    paddingBottom: 10,
   },
   tabBarIndicatorStyle: {
     backgroundColor: '#FFF',
