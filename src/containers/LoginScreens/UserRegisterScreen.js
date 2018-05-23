@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
 import CustomTextInputWithLabel from '../../components/loginComponents/CustomTextInputWithLabel';
 import MyButton from '../../components/common/MyButton';
 
@@ -10,18 +11,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingLeft: 15,
     paddingRight: 15,
+    backgroundColor: '#FFF',
   },
   backgroundImageStyle: {
     opacity: 0.05,
     position: 'absolute',
-    top: 0,
-    bottom: 0,
-    right: 0,
-    left: 0,
+    width: '100%',
+    height: '100%',
   },
   headerContainer: {
     alignItems: 'center',
     paddingTop: 62,
+    marginBottom: 16,
   },
   inputFieldContainer: {
     height: 252,
@@ -64,6 +65,20 @@ const headerImage = require('../../assets/images/loginScreens/registerHeaderImag
 const fbLogo = require('../../assets/images/loginScreens/fbLogo.png');
 
 class UserRegisterScreen extends React.PureComponent {
+  static propTypes = {
+    navigation: PropTypes.shape({
+      navigate: PropTypes.func.isRequired,
+    }).isRequired,
+  };
+
+  handleLoginPress = () => {
+    this.props.navigation.navigate('LoginScreen');
+  };
+
+  handleContinuePress = () => {
+    this.props.navigation.navigate('RegisterDoneScreen');
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -95,21 +110,28 @@ class UserRegisterScreen extends React.PureComponent {
         <View style={styles.buttonContainer}>
           <MyButton
             text="Tiếp tục"
-            color="rgb(32, 150, 255)"
+            color="rgb(63, 81, 181)"
             textColor="rgb(255, 255, 255)"
-            size="small"
+            iconWidth={20}
+            iconHeight={20}
+            borderColor="rgb(63, 81, 181)"
+            onPress={this.handleContinuePress}
           />
           <MyButton
             text="Đăng ký bằng Facebook"
             color="rgb(255, 255, 255)"
             textColor="rgb(63, 81, 181)"
-            size="small"
+            iconWidth={20}
+            iconHeight={20}
             icon={fbLogo}
+            borderColor="rgb(59, 87, 157)"
           />
         </View>
         <View style={styles.footerTextContainer}>
           <Text style={styles.footerText1}>Bạn đã có tài khoản? </Text>
-          <Text style={styles.footerText2}>Đăng nhập</Text>
+          <Text style={styles.footerText2} onPress={this.handleLoginPress}>
+            Đăng nhập
+          </Text>
         </View>
       </View>
     );

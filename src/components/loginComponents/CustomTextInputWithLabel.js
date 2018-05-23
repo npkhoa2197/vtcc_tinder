@@ -9,13 +9,19 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'stretch',
   },
+  textInputContainer: {
+    alignSelf: 'stretch',
+  },
   label: {
     fontSize: 14,
     color: 'rgb(137, 139, 155)',
     marginBottom: 11,
   },
-  textInputContainer: {
-    alignSelf: 'stretch',
+  textInput: {
+    fontSize: 16,
+    borderBottomColor: '#cecece',
+    borderBottomWidth: 1,
+    paddingBottom: 10,
   },
 });
 
@@ -51,6 +57,7 @@ export default class CustomTextInput extends React.PureComponent {
       <View style={styles.container}>
         <Text style={styles.label}>{label}</Text>
         <TextInput
+          style={styles.textInput}
           onChangeText={(text) => {
             this.setState({ text });
             onChangeText(text);

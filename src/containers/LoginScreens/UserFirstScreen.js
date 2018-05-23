@@ -2,6 +2,9 @@ import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import MyButton from '../../components/common/MyButton';
+// import { CustomFontStyle } from '../../constants/styles';
+
+// const { ProTextRegular, ProTextBold } = CustomFontStyle;
 
 const styles = StyleSheet.create({
   container: {
@@ -11,6 +14,7 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     paddingRight: 15,
     paddingTop: 46,
+    backgroundColor: '#FFF',
   },
   backgroundImageStyle: {
     position: 'absolute',
@@ -68,8 +72,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const backgroundImage = require('../../assets/images/loginScreens/loginScreenBackground.png');
-const bodyImage = require('../../assets/images/loginScreens/loginScreenBodyImage.png');
+const backgroundImage = require('../../assets/images/loginScreens/firstScreenBackground.png');
+const bodyImage = require('../../assets/images/loginScreens/firstScreenBodyImage.png');
 const logo = require('../../assets/images/loginScreens/logo.png');
 const fbLogo = require('../../assets/images/loginScreens/fbLogo.png');
 
@@ -79,7 +83,9 @@ class UserFirstScreen extends React.PureComponent {
       navigate: PropTypes.func.isRequired,
     }).isRequired,
   };
-  handleLoginPress = () => {};
+  handleLoginPress = () => {
+    this.props.navigation.navigate('LoginScreen');
+  };
   handleRegisterPress = () => {
     this.props.navigation.navigate('RegisterScreen');
   };
@@ -101,13 +107,16 @@ class UserFirstScreen extends React.PureComponent {
             text="Đăng nhập"
             color="rgb(32, 150, 255)"
             textColor="rgb(255, 255, 255)"
-            size="small"
+            borderColor="rgb(32, 150, 255)"
+            onPress={this.handleLoginPress}
           />
           <MyButton
             text="Đăng nhập bằng Facebook"
             color="rgb(255, 255, 255)"
             textColor="rgb(63, 81, 181)"
-            size="small"
+            iconWidth={20}
+            iconHeight={20}
+            borderColor="rgb(255, 255, 255)"
             icon={fbLogo}
           />
           <View style={styles.footerTextContainer}>

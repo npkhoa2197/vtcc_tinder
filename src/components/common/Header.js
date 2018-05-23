@@ -4,55 +4,54 @@ import PropTypes from 'prop-types';
 
 const styles = StyleSheet.create({
   container: {
-    height: 55,
+    height: 44,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#0054A5',
     paddingLeft: 15,
-    paddingRight: 10,
+    paddingRight: 17,
   },
   containerIos: {
-    height: 55 + 24,
+    height: 44 + 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#0054A5',
-    paddingTop: 24,
+    paddingTop: 20,
     paddingLeft: 15,
-    paddingRight: 10,
+    paddingRight: 17,
   },
   imageStyle: {
     height: 50,
     width: 50,
   },
   titleStyle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: 'white',
+    fontSize: 17,
   },
 });
 
 const isIos = Platform.OS === 'ios';
 
-const fireImg = require('../assets/images/hotgirlicon.png');
+// const fireImg = require('../assets/images/hotgirlicon.png');
 
-const Header = ({ headerText, onHeaderButtonPress }) => (
-  <View style={isIos ? styles.containerIos : styles.container}>
-    <Text style={styles.titleStyle}>{headerText}</Text>
-    <TouchableOpacity onPress={onHeaderButtonPress}>
-      <Image style={styles.imageStyle} source={fireImg} />
-    </TouchableOpacity>
+const Header = ({
+  headerText, backgroundColor, textColor, onHeaderButtonPress,
+}) => (
+  <View style={[isIos ? styles.containerIos : styles.container, { backgroundColor }]}>
+    <Text style={[styles.titleStyle, { color: textColor }]}>{headerText}</Text>
   </View>
 );
 
 Header.propTypes = {
   headerText: PropTypes.string,
   onHeaderButtonPress: PropTypes.func,
+  backgroundColor: PropTypes.string,
+  textColor: PropTypes.string,
 };
 
 Header.defaultProps = {
   headerText: 'NEW FRIENDS',
+  backgroundColor: '#3f51b5',
+  textColor: '#FFF',
   onHeaderButtonPress: () => {},
 };
 
