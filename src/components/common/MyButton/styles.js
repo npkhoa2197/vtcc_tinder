@@ -8,8 +8,6 @@ export const styles = StyleSheet.create({
     borderRadius: 30,
     borderWidth: 1,
     elevation: 1,
-    padding: 10,
     minWidth: 70,
-    height: 48,
   },
 });

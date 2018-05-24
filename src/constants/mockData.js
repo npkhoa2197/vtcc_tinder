@@ -41,13 +41,78 @@ export const mockDataChatRequest = [
     id: '1',
     name: 'Thùy Dung',
     requestTime: '5h trước',
-    requestMessage: '',
   },
   {
     id: '2',
     name: 'Lê Bảo Hân',
     requestTime: '5h trước',
-    requestMessage:
-      'Đây là thông điệp lúc request chat mà user Lê Bảo Hân đã nhập gửi tới người dùng.',
+  },
+];
+
+export const mockDataChatBlacklist = [
+  {
+    id: '1',
+    name: 'Đức Trí',
+    blacklistFrom: '27/03/2018',
+  },
+  {
+    id: '2',
+    name: 'Hồ Ngọc Hà',
+    blacklistFrom: '27/03/2018',
+  },
+  {
+    id: '3',
+    name: 'Hồ Quỳnh Hương',
+    blacklistFrom: '27/03/2018',
+  },
+  {
+    id: '4',
+    name: 'Đàm Vĩnh Hưng',
+    blacklistFrom: '27/03/2018',
+  },
+  {
+    id: '5',
+    name: 'Lê Hoàng',
+    blacklistFrom: '27/03/2018',
+  },
+];
+
+export const mockDataChatMessageDetail = [
+  {
+    id: '1',
+    senderuid: 'UIXa10',
+    body:
+      'Bạn hoàn toàn có thể rửa mặt bằng nước muối 0.5%. Nếu có thể, bạn làm ấm một chút bằng lò vi sóng thì sẽ còn tốt hơn nữa.',
+    time: '09:14 am',
+    status: '',
+  },
+  {
+    id: '2',
+    senderuid: 'UIXa10',
+    body:
+      'Khi mà user Chat làm nhiều dòng rồi ấn enter theo thói quen Thì hệ thống tự hộp lại trong một hộp thoại',
+    time: '09:14 am',
+    status: '',
+  },
+  {
+    id: '3',
+    senderuid: 'WZXa10',
+    body: 'Đây là nội dung chat của người dùng, không hiện avatar.',
+    time: '09:14 am',
+    status: 'MSG_SENT',
+  },
+  {
+    id: '4',
+    senderuid: 'WZXa10',
+    body: 'Khi đã nhận nhưng chưa xem',
+    time: '09:14 am',
+    status: 'MSG_RECEIVED',
+  },
+  {
+    id: '5',
+    senderuid: 'WZXa10',
+    body: 'Khi đã nhận nhưng chưa xem',
+    time: '09:14 am',
+    status: 'MSG_ERROR',
   },
 ];

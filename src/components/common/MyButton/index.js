@@ -4,11 +4,15 @@ import PropTypes from 'prop-types';
 
 import { styles } from './styles';
 
-const renderIcon = (icon, text, iconWidth, iconHeight) => {
+const renderIcon = (icon, text, iconWidth, iconHeight, marginRightIcon) => {
   if (icon !== null) {
     return (
       <Image
-        style={{ marginRight: text !== '' ? 16 : 0, width: iconWidth, height: iconHeight }}
+        style={{
+          marginRight: text !== '' ? marginRightIcon : 0,
+          width: iconWidth,
+          height: iconHeight,
+        }}
         source={icon}
       />
     );
@@ -25,18 +29,39 @@ const renderText = (text, fontSize, textColor) => {
 
 const MyButton = ({
   onPress,
-  text,
   icon,
-  color,
-  fontSize,
   iconWidth,
   iconHeight,
+  text,
+  fontSize,
   textColor,
+  color,
+  height,
   borderColor,
+  paddingTop,
+  paddingBottom,
+  paddingLeft,
+  paddingRight,
+  marginRight,
+  marginRightIcon,
 }) => (
   <TouchableOpacity onPress={onPress}>
-    <View style={[styles.buttonStyle, { backgroundColor: color, borderColor }]}>
-      {renderIcon(icon, text, iconWidth, iconHeight)}
+    <View
+      style={[
+        styles.buttonStyle,
+        {
+          backgroundColor: color,
+          borderColor,
+          height,
+          paddingTop,
+          paddingBottom,
+          paddingLeft,
+          paddingRight,
+          marginRight,
+        },
+      ]}
+    >
+      {renderIcon(icon, text, iconWidth, iconHeight, marginRightIcon)}
       {renderText(text, fontSize, textColor)}
     </View>
   </TouchableOpacity>
@@ -51,7 +76,14 @@ MyButton.propTypes = {
   fontSize: PropTypes.number,
   iconWidth: PropTypes.number,
   iconHeight: PropTypes.number,
+  height: PropTypes.number,
   borderColor: PropTypes.string,
+  paddingTop: PropTypes.number,
+  paddingBottom: PropTypes.number,
+  paddingLeft: PropTypes.number,
+  paddingRight: PropTypes.number,
+  marginRight: PropTypes.number,
+  marginRightIcon: PropTypes.number,
 };
 
 MyButton.defaultProps = {
@@ -63,7 +95,14 @@ MyButton.defaultProps = {
   fontSize: 18,
   iconWidth: 24,
   iconHeight: 24,
+  height: 48,
   borderColor: 'white',
+  paddingTop: 10,
+  paddingBottom: 10,
+  paddingLeft: 10,
+  paddingRight: 10,
+  marginRight: 0,
+  marginRightIcon: 16,
 };
 
 export default MyButton;

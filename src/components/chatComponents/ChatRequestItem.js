@@ -54,14 +54,18 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: 'rgb(137, 139, 155)',
   },
+  skipText: {
+    fontSize: 14,
+    color: 'rgb(63, 81, 181)',
+  },
 });
 
 const avatar = require('../../assets/images/chatScreens/avatar1.png');
+const chatRequestAcceptIcon = require('../../assets/images/chatScreens/chatRequestAcceptIcon.png');
+const chatRequestDeclineIcon = require('../../assets/images/chatScreens/chatRequestDeclineIcon.png');
 
 const ChatRequestItem = (props) => {
-  const {
-    id, name, requestMessage, requestTime,
-  } = props.item;
+  const { id, name, requestTime } = props.item;
   return (
     <View style={styles.container}>
       <View style={styles.leftContainer}>
@@ -78,16 +82,37 @@ const ChatRequestItem = (props) => {
         <View style={styles.innerContainer2}>
           <MyButton
             text="Chấp nhận"
+            icon={chatRequestAcceptIcon}
+            iconWidth={14}
+            iconHeight={10}
             fontSize={14}
             textColor="rgb(63, 81, 181)"
             borderColor="rgb(214, 218, 223)"
+            height={32}
+            paddingTop={4}
+            paddingBottom={4}
+            paddingRight={13}
+            paddingLeft={12}
+            marginRight={10}
+            marginRightIcon={6}
           />
           <MyButton
             text="Từ chối"
+            icon={chatRequestDeclineIcon}
+            iconWidth={14}
+            iconHeight={10}
             fontSize={14}
             textColor="rgb(63, 81, 181)"
             borderColor="rgb(214, 218, 223)"
+            height={32}
+            paddingTop={4}
+            paddingBottom={4}
+            paddingRight={13}
+            paddingLeft={12}
+            marginRight={10}
+            marginRightIcon={6}
           />
+          <Text style={styles.skipText}>Bỏ qua</Text>
         </View>
       </View>
     </View>
@@ -98,7 +123,6 @@ ChatRequestItem.propTypes = {
   item: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    requestMessage: PropTypes.string.isRequired,
     requestTime: PropTypes.string.isRequired,
   }).isRequired,
 };
