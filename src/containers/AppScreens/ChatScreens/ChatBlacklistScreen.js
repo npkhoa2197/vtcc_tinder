@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, FlatList, StyleSheet, Image, TextInput } from 'react-native';
+import { View, Text, FlatList, StyleSheet } from 'react-native';
 import { mockDataChatBlacklist } from '../../../constants/mockData';
 import ChatBlacklistItem from '../../../components/chatComponents/ChatBlacklistItem';
+import SearchBox from '../../../components/common/SearchBox';
 
 const styles = StyleSheet.create({
   container: {
@@ -18,14 +19,6 @@ const styles = StyleSheet.create({
     marginBottom: 13,
     marginTop: 16,
   },
-  searchBoxContainer: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    marginLeft: 15,
-    marginTop: 15,
-    marginBottom: 15,
-  },
   addText: {
     fontSize: 14,
     color: 'rgb(63, 81, 181)',
@@ -33,15 +26,6 @@ const styles = StyleSheet.create({
   instructionText: {
     fontSize: 14,
     color: 'rgb(48, 49, 55)',
-  },
-  searchIcon: {
-    width: 24,
-    height: 24,
-    marginRight: 10,
-  },
-  searchText: {
-    fontSize: 16,
-    color: 'rgb(174, 180, 187)',
   },
   separator: {
     marginLeft: 15,
@@ -54,8 +38,6 @@ const styles = StyleSheet.create({
     height: 4,
   },
 });
-
-const searchIcon = require('../../../assets/images/chatScreens/chatBlacklistSearchIcon.png');
 
 class ChatBlacklistScreen extends React.PureComponent {
   keyExtractor = item => item.id;
@@ -74,15 +56,7 @@ class ChatBlacklistScreen extends React.PureComponent {
           </Text>
         </View>
         <View style={styles.bodySeparator} />
-        <View style={styles.searchBoxContainer}>
-          <Image style={styles.searchIcon} source={searchIcon} />
-          <TextInput
-            style={{ fontSize: 16 }}
-            multiline={false}
-            placeholder="tìm kiếm hồ sơ"
-            placeholderTextColor="rgb(174, 180, 187)"
-          />
-        </View>
+        <SearchBox placeholder="tìm kiếm hồ sơ" />
         <View
           style={{
             height: 1,

@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'stretch',
+    backgroundColor: '#FFF',
   },
   headerText: {
     fontSize: 14,

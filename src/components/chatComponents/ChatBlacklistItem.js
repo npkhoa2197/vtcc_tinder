@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
+import { withNavigation } from 'react-navigation';
 
 const styles = StyleSheet.create({
   container: {
@@ -42,7 +43,12 @@ const ChatBlacklistItem = (props) => {
         <Text style={styles.blacklistFrom}>Chặn từ ngày {blacklistFrom}</Text>
       </View>
       <View style={styles.rightContainer}>
-        <Text style={styles.removeText}>BỎ CHẶN</Text>
+        <Text
+          style={styles.removeText}
+          onPress={() => props.navigation.navigate('ChatBlacklistNotificationScreen')}
+        >
+          BỎ CHẶN
+        </Text>
       </View>
     </View>
   );
@@ -53,6 +59,9 @@ ChatBlacklistItem.propTypes = {
     name: PropTypes.string.isRequired,
     blacklistFrom: PropTypes.string.isRequired,
   }).isRequired,
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
-export default ChatBlacklistItem;
+export default withNavigation(ChatBlacklistItem);

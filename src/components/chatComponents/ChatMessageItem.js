@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
+import { withNavigation } from 'react-navigation';
 
 const styles = StyleSheet.create({
   container: {
@@ -75,35 +76,41 @@ const ChatMessageItem = (props) => {
       break;
   }
   return (
-    <View style={styles.container}>
-      <View style={styles.leftContainer}>
-        <Image style={styles.avatar} source={avatar} />
-        <View style={styles.innerContainer}>
-          <Text style={styles.name}>{name}</Text>
-          <View style={styles.bodyContainer}>
-            <Image style={[icon !== null ? styles.icon : {}, iconSize]} source={icon} />
-            <Text
-              style={[
-                styles.body,
-                { color: status === 'MSG_PENDING' ? 'rgb(48, 49, 55)' : 'rgb(137, 139, 155)' },
-              ]}
-            >
-              {body}
-            </Text>
+    <TouchableOpacity
+      onPress={() => {
+        props.navigation.navigate('ChatMessageDetailScreen');
+      }}
+    >
+      <View style={styles.container}>
+        <View style={styles.leftContainer}>
+          <Image style={styles.avatar} source={avatar} />
+          <View style={styles.innerContainer}>
+            <Text style={styles.name}>{name}</Text>
+            <View style={styles.bodyContainer}>
+              <Image style={[icon !== null ? styles.icon : {}, iconSize]} source={icon} />
+              <Text
+                style={[
+                  styles.body,
+                  { color: status === 'MSG_PENDING' ? 'rgb(48, 49, 55)' : 'rgb(137, 139, 155)' },
+                ]}
+              >
+                {body}
+              </Text>
+            </View>
           </View>
         </View>
+        <View>
+          <Text
+            style={[
+              styles.time,
+              { color: status === 'MSG_PENDING' ? 'rgb(48, 49, 55)' : 'rgb(137, 139, 155)' },
+            ]}
+          >
+            {time}
+          </Text>
+        </View>
       </View>
-      <View>
-        <Text
-          style={[
-            styles.time,
-            { color: status === 'MSG_PENDING' ? 'rgb(48, 49, 55)' : 'rgb(137, 139, 155)' },
-          ]}
-        >
-          {time}
-        </Text>
-      </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -115,6 +122,9 @@ ChatMessageItem.propTypes = {
     time: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,
   }).isRequired,
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
-export default ChatMessageItem;
+export default withNavigation(ChatMessageItem);

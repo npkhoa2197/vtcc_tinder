@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  createStackNavigator,
-  createBottomTabNavigator,
-} from 'react-navigation';
+import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 import { Image } from 'react-native';
 import HomeScreen from '../containers/AppScreens/HomeScreens/HomeScreen';
 import TopicScreen from '../containers/AppScreens/TopicScreens/TopicScreen';
@@ -12,6 +9,7 @@ import ChatMessageScreen from '../containers/AppScreens/ChatScreens/ChatMessageS
 import ChatMessageDetailScreen from '../containers/AppScreens/ChatScreens/ChatMessageDetailScreen';
 import ChatBlackListScreen from '../containers/AppScreens/ChatScreens/ChatBlacklistScreen';
 import ChatBlacklistAddNewScreen from '../containers/AppScreens/ChatScreens/ChatBlacklistAddNewScreen';
+import ChatBlacklistNotificationScreen from '../containers/AppScreens/ChatScreens/ChatBlacklistNotificationScreen';
 import ChatRequestScreen from '../containers/AppScreens/ChatScreens/ChatRequestScreen';
 import ChatRequestDetailScreen from '../containers/AppScreens/ChatScreens/ChatRequestDetailScreen';
 import ChatScreen from '../containers/AppScreens/ChatScreens/ChatScreen';
@@ -37,7 +35,6 @@ const MediaStack = createStackNavigator({
 export const ChatMessageStack = createStackNavigator(
   {
     ChatMessageScreen: { screen: ChatMessageScreen, navigationOptions: { header: null } },
-    ChatMessageDetailScreen,
   },
   {
     initialRouteName: 'ChatMessageScreen',
@@ -47,7 +44,6 @@ export const ChatMessageStack = createStackNavigator(
 export const ChatRequestStack = createStackNavigator(
   {
     ChatRequestScreen: { screen: ChatRequestScreen, navigationOptions: { header: null } },
-    ChatRequestDetailScreen,
   },
   {
     initialRouteName: 'ChatRequestScreen',
@@ -57,7 +53,6 @@ export const ChatRequestStack = createStackNavigator(
 export const ChatBlacklistStack = createStackNavigator(
   {
     BlackListScreen: { screen: ChatBlackListScreen, navigationOptions: { header: null } },
-    ChatBlacklistAddNewScreen,
   },
   {
     initialRouteName: 'BlackListScreen',
@@ -86,7 +81,7 @@ const ProfileStack = createStackNavigator({
   ProfileScreen: { screen: ProfileScreen, navigationOptions: { header: null } },
 });
 
-export const AppStack = createBottomTabNavigator(
+const BottomNavigatorStack = createBottomTabNavigator(
   {
     Home: {
       screen: HomeStack,
@@ -148,3 +143,13 @@ export const AppStack = createBottomTabNavigator(
     order: ['Home', 'Topic', 'Media', 'Chat', 'Profile'],
   },
 );
+
+export const AppStack = createStackNavigator({
+  BottomNavigatorStack: { screen: BottomNavigatorStack, navigationOptions: { header: null } },
+  ChatMessageDetailScreen,
+  ChatRequestDetailScreen,
+  ChatBlacklistNotificationScreen: {
+    screen: ChatBlacklistNotificationScreen,
+    navigationOptions: { header: null },
+  },
+});

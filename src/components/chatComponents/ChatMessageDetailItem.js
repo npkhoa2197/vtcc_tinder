@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 
 const styles = StyleSheet.create({
@@ -27,9 +27,15 @@ const styles = StyleSheet.create({
     width: 310,
     borderRadius: 10,
     backgroundColor: '#FFF',
-    marginBottom: 4,
+    marginBottom: 8,
+  },
+  statusContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
   avatar: {
+    borderRadius: 14,
     width: 35,
     height: 35,
   },
@@ -44,16 +50,33 @@ const styles = StyleSheet.create({
   time: {
     fontSize: 12,
     color: 'rgb(153, 163, 171)',
-    marginBottom: 4,
+    marginBottom: 8,
+  },
+  icon: {
+    width: 13,
+    height: 8,
+    marginRight: 4,
+    marginBottom: 8,
   },
   status: {
     fontSize: 12,
     color: 'rgb(153, 163, 171)',
-    marginBottom: 4,
+    marginBottom: 8,
+  },
+  tryAgainText: {
+    color: 'rgb(63, 81, 181)',
+    fontSize: 12,
+    marginBottom: 8,
+    marginLeft: 5,
   },
 });
 
 const avatar = require('../../assets/images/chatScreens/avatar1.png');
+const msgSentIcon = require('../../assets/images/chatScreens/chatMessageSent.png');
+const msgSeenIcon = require('../../assets/images/chatScreens/chatMessageSeen.png');
+const msgErrorIcon = require('../../assets/images/chatScreens/chatMessageError.png');
+
+console.log(msgSentIcon);
 
 const currentUserUID = 'WZXa10';
 
@@ -64,41 +87,75 @@ const ChatMessageDetailItem = (props) => {
 
   if (senderuid !== currentUserUID) {
     return (
-      <View style={styles.container1}>
-        <View style={styles.leftContainer}>
-          <Image style={styles.avatar} source={avatar} />
-        </View>
-        <View style={styles.rightContainer}>
-          <View style={styles.messageContainer}>
-            <Text style={styles.messageBody}>{body}</Text>
+      <TouchableOpacity onLongPress={() => props.onLongPress()}>
+        <View style={styles.container1}>
+          <View style={styles.leftContainer}>
+            <Image style={styles.avatar} source={avatar} />
           </View>
-          <Text style={styles.time}>{time}</Text>
+          <View style={styles.rightContainer}>
+            <View style={styles.messageContainer}>
+              <Text style={styles.messageBody}>{body}</Text>
+            </View>
+            <Text style={styles.time}>{time}</Text>
+          </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
+
   let statusMsg = '';
+  let icon = null;
+  let iconSize = null;
+
   switch (status) {
     case 'MSG_SENT':
       statusMsg = 'Đã nhận';
+      icon = msgSentIcon;
+      iconSize = { width: 9, height: 7 };
       break;
     case 'MSG_RECEIVED':
       statusMsg = 'Đã xem';
+      icon = msgSeenIcon;
+      iconSize = { width: 13.8, height: 7 };
       break;
     case 'MSG_ERROR':
       statusMsg = 'Gửi lỗi';
+      icon = msgErrorIcon;
+      iconSize = { width: 8, height: 8 };
       break;
     default:
+      iconSize = { width: 0, height: 0 };
       break;
   }
 
+  if (status !== 'MSG_ERROR') {
+    return (
+      <TouchableOpacity onLongPress={() => props.onLongPress()}>
+        <View style={styles.container2}>
+          <View style={[styles.messageContainer, { backgroundColor: 'rgb(63, 81, 181)' }]}>
+            <Text style={[styles.messageBody, { color: '#FFF' }]}>{body}</Text>
+          </View>
+          <View style={styles.statusContainer}>
+            <Image style={[icon !== null ? styles.icon : {}, iconSize]} source={icon} />
+            <Text style={styles.status}>{statusMsg}</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  }
   return (
-    <View style={styles.container2}>
-      <View style={styles.messageContainer}>
-        <Text style={styles.messageBody}>{body}</Text>
+    <TouchableOpacity onLongPress={() => props.onLongPress()}>
+      <View style={styles.container2}>
+        <View style={[styles.messageContainer, { backgroundColor: 'rgb(214, 218, 223)' }]}>
+          <Text style={[styles.messageBody, { color: '#FFF' }]}>{body}</Text>
+        </View>
+        <View style={styles.statusContainer}>
+          <Image style={[icon !== null ? styles.icon : {}, iconSize]} source={icon} />
+          <Text style={styles.status}>{statusMsg}</Text>
+          <Text style={styles.tryAgainText}>Thử lại</Text>
+        </View>
       </View>
-      <Text style={styles.status}>{statusMsg}</Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -108,6 +165,7 @@ ChatMessageDetailItem.propTypes = {
     time: PropTypes.string.isRequired,
     senderuid: PropTypes.string.isRequired,
   }),
+  onLongPress: PropTypes.func,
 };
 
 ChatMessageDetailItem.defaultProps = {
@@ -116,6 +174,7 @@ ChatMessageDetailItem.defaultProps = {
     time: '09:12 am',
     senderuid: '',
   },
+  onLongPress: () => {},
 };
 
 export default ChatMessageDetailItem;

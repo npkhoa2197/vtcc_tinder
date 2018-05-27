@@ -14,6 +14,8 @@ export const styles = StyleSheet.create({
     borderRadius: 4,
     padding: 15,
     elevation: 1,
+    marginLeft: 15,
+    marginRight: 15,
   },
   btnContainer: {
     flexDirection: 'row',

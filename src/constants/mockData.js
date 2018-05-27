@@ -90,7 +90,7 @@ export const mockDataChatMessageDetail = [
     id: '2',
     senderuid: 'UIXa10',
     body:
-      'Khi mà user Chat làm nhiều dòng rồi ấn enter theo thói quen Thì hệ thống tự hộp lại trong một hộp thoại',
+      'Bạn hoàn toàn có thể rửa mặt bằng nước muối 0.5%. Nếu có thể, bạn làm ấm một chút bằng lò vi sóng thì sẽ còn tốt hơn nữa.',
     time: '09:14 am',
     status: '',
   },
@@ -114,5 +114,28 @@ export const mockDataChatMessageDetail = [
     body: 'Khi đã nhận nhưng chưa xem',
     time: '09:14 am',
     status: 'MSG_ERROR',
+  },
+];
+
+export const mockDataChatCreate = [
+  {
+    id: '1',
+    name: 'Kiên Trần',
+    jobTitle: 'Nhân viên tự do',
+  },
+  {
+    id: '2',
+    name: 'Kiên Trần',
+    jobTitle: 'Giáo sư sử học',
+  },
+  {
+    id: '3',
+    name: 'Kiên Trần',
+    jobTitle: 'Nhân viên tự do',
+  },
+  {
+    id: '4',
+    name: 'Kiên Trần',
+    jobTitle: 'Tiêu đề',
   },
 ];

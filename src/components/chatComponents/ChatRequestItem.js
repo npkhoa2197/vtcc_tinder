@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
+import { withNavigation } from 'react-navigation';
 import MyButton from '../common/MyButton';
 
 const styles = StyleSheet.create({
@@ -67,55 +68,57 @@ const chatRequestDeclineIcon = require('../../assets/images/chatScreens/chatRequ
 const ChatRequestItem = (props) => {
   const { id, name, requestTime } = props.item;
   return (
-    <View style={styles.container}>
-      <View style={styles.leftContainer}>
-        <Image style={styles.avatar} source={avatar} />
-      </View>
-      <View style={styles.rightContainer}>
-        <View style={styles.innerContainer1}>
-          <View style={styles.nameAndTextContainer}>
-            <Text style={styles.name}>{name}</Text>
-            <Text style={styles.text}> muốn được chat với bạn</Text>
+    <TouchableOpacity onPress={() => props.navigation.navigate('ChatRequestDetailScreen')}>
+      <View style={styles.container}>
+        <View style={styles.leftContainer}>
+          <Image style={styles.avatar} source={avatar} />
+        </View>
+        <View style={styles.rightContainer}>
+          <View style={styles.innerContainer1}>
+            <View style={styles.nameAndTextContainer}>
+              <Text style={styles.name}>{name}</Text>
+              <Text style={styles.text}> muốn được chat với bạn</Text>
+            </View>
+            <Text style={styles.time}>{requestTime}</Text>
           </View>
-          <Text style={styles.time}>{requestTime}</Text>
-        </View>
-        <View style={styles.innerContainer2}>
-          <MyButton
-            text="Chấp nhận"
-            icon={chatRequestAcceptIcon}
-            iconWidth={14}
-            iconHeight={10}
-            fontSize={14}
-            textColor="rgb(63, 81, 181)"
-            borderColor="rgb(214, 218, 223)"
-            height={32}
-            paddingTop={4}
-            paddingBottom={4}
-            paddingRight={13}
-            paddingLeft={12}
-            marginRight={10}
-            marginRightIcon={6}
-          />
-          <MyButton
-            text="Từ chối"
-            icon={chatRequestDeclineIcon}
-            iconWidth={14}
-            iconHeight={10}
-            fontSize={14}
-            textColor="rgb(63, 81, 181)"
-            borderColor="rgb(214, 218, 223)"
-            height={32}
-            paddingTop={4}
-            paddingBottom={4}
-            paddingRight={13}
-            paddingLeft={12}
-            marginRight={10}
-            marginRightIcon={6}
-          />
-          <Text style={styles.skipText}>Bỏ qua</Text>
+          <View style={styles.innerContainer2}>
+            <MyButton
+              text="Chấp nhận"
+              icon={chatRequestAcceptIcon}
+              iconWidth={14}
+              iconHeight={10}
+              fontSize={14}
+              textColor="rgb(63, 81, 181)"
+              borderColor="rgb(214, 218, 223)"
+              height={32}
+              paddingTop={4}
+              paddingBottom={4}
+              paddingRight={13}
+              paddingLeft={12}
+              marginRight={10}
+              marginRightIcon={6}
+            />
+            <MyButton
+              text="Từ chối"
+              icon={chatRequestDeclineIcon}
+              iconWidth={14}
+              iconHeight={10}
+              fontSize={14}
+              textColor="rgb(63, 81, 181)"
+              borderColor="rgb(214, 218, 223)"
+              height={32}
+              paddingTop={4}
+              paddingBottom={4}
+              paddingRight={13}
+              paddingLeft={12}
+              marginRight={10}
+              marginRightIcon={6}
+            />
+            <Text style={styles.skipText}>Bỏ qua</Text>
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -125,6 +128,9 @@ ChatRequestItem.propTypes = {
     name: PropTypes.string.isRequired,
     requestTime: PropTypes.string.isRequired,
   }).isRequired,
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
-export default ChatRequestItem;
+export default withNavigation(ChatRequestItem);

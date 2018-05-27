@@ -7,8 +7,8 @@ import ChatRequestItem from '../../../components/chatComponents/ChatRequestItem'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    justifyContent: 'center',
+    alignItems: 'stretch',
     backgroundColor: '#FFF',
   },
   headerContainer: {
@@ -80,21 +80,23 @@ class ChatMessageScreen extends React.PureComponent {
 
   render() {
     return (
-      <SectionList
-        sections={[
-          {
-            title: 'Yêu cầu chat',
-            data: mockDataChatRequest.slice(mockDataChatRequest.length - 1),
-          },
-          { title: 'Đang chat', data: mockDataChatMessage },
-        ]}
-        keyExtractor={this.keyExtractor}
-        renderItem={({ item, section }) => this.renderItem(item, section)}
-        renderSectionHeader={({ section: { title } }) => this.renderSectionHeader(title)}
-        ItemSeparatorComponent={this.renderItemSeparator}
-        SectionSeparatorComponent={this.renderItemSeparator}
-        stickySectionHeadersEnabled={false}
-      />
+      <View style={styles.container}>
+        <SectionList
+          sections={[
+            {
+              title: 'Yêu cầu chat',
+              data: mockDataChatRequest.slice(mockDataChatRequest.length - 1),
+            },
+            { title: 'Đang chat', data: mockDataChatMessage },
+          ]}
+          keyExtractor={this.keyExtractor}
+          renderItem={({ item, section }) => this.renderItem(item, section)}
+          renderSectionHeader={({ section: { title } }) => this.renderSectionHeader(title)}
+          ItemSeparatorComponent={this.renderItemSeparator}
+          SectionSeparatorComponent={this.renderItemSeparator}
+          stickySectionHeadersEnabled={false}
+        />
+      </View>
     );
   }
 }
