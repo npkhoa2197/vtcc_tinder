@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import { withNavigation } from 'react-navigation';
+import { CHAT_BLACK_LIST_NOTIFICATION_SCREEN } from '../../constants/strings/screenNames';
 
 const styles = StyleSheet.create({
   container: {
@@ -45,7 +46,11 @@ const ChatBlacklistItem = (props) => {
       <View style={styles.rightContainer}>
         <Text
           style={styles.removeText}
-          onPress={() => props.navigation.navigate('ChatBlacklistNotificationScreen')}
+          onPress={() =>
+            props.navigation.navigate(CHAT_BLACK_LIST_NOTIFICATION_SCREEN, {
+              blockUserName: name,
+            })
+          }
         >
           BỎ CHẶN
         </Text>

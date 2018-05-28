@@ -1,8 +1,10 @@
 import React from 'react';
 import { View, Text, SectionList, StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
 import { mockDataChatCreate } from '../../../constants/mockData';
 import ChatCreateContactItem from '../../../components/chatComponents/ChatCreateContactItem';
 import SearchBox from '../../../components/common/SearchBox';
+import Header from '../../../components/common/Header';
 
 const styles = StyleSheet.create({
   container: {
@@ -27,13 +29,29 @@ const styles = StyleSheet.create({
 });
 
 class ChatCreateScreen extends React.PureComponent {
+  static propTypes = {
+    navigation: PropTypes.shape({
+      goBack: PropTypes.func.isRequired,
+    }).isRequired,
+  };
   keyExtractor = item => item.id;
   renderItem = item => <ChatCreateContactItem item={item} />;
   renderSectionHeader = title => <Text style={styles.sectionHeader}>{title}</Text>;
   render() {
     return (
       <View style={styles.container}>
+        <Header
+          headerText="Tạo trò chuyện mới"
+          isBack
+          onBackPress={() => this.props.navigation.goBack()}
+        />
         <SearchBox placeholder="nhập tên người muốn chat" />
+        <View
+          style={{
+            height: 1,
+            backgroundColor: 'rgb(230, 230, 230)',
+          }}
+        />
         <View style={styles.innerContainer}>
           <SectionList
             sections={[

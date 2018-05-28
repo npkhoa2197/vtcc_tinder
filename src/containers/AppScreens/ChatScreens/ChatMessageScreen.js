@@ -3,6 +3,10 @@ import { View, Text, StyleSheet, SectionList } from 'react-native';
 import ChatMessageItem from '../../../components/chatComponents/ChatMessageItem';
 import { mockDataChatMessage, mockDataChatRequest } from '../../../constants/mockData';
 import ChatRequestItem from '../../../components/chatComponents/ChatRequestItem';
+import {
+  CHAT_MESSAGE_SCREEN_SECTIONLIST_REQUESTCHAT,
+  CHAT_MESSAGE_SCREEN_SECTIONLIST_CHATMESSAGE,
+} from '../../../constants/strings/screenNames';
 
 const styles = StyleSheet.create({
   container: {
@@ -42,7 +46,7 @@ class ChatMessageScreen extends React.PureComponent {
 
   renderSectionHeader = (title) => {
     switch (title) {
-      case 'Yêu cầu chat':
+      case CHAT_MESSAGE_SCREEN_SECTIONLIST_REQUESTCHAT:
         return (
           <View style={styles.headerContainer}>
             <Text style={styles.headerText}>{title}</Text>
@@ -51,7 +55,7 @@ class ChatMessageScreen extends React.PureComponent {
             </View>
           </View>
         );
-      case 'Đang chat':
+      case CHAT_MESSAGE_SCREEN_SECTIONLIST_CHATMESSAGE:
         return (
           <View style={styles.headerContainer}>
             <Text style={styles.headerText}>{title}</Text>
@@ -66,9 +70,9 @@ class ChatMessageScreen extends React.PureComponent {
 
   renderItem = (item, section) => {
     switch (section.title) {
-      case 'Yêu cầu chat':
+      case CHAT_MESSAGE_SCREEN_SECTIONLIST_REQUESTCHAT:
         return <ChatRequestItem item={item} />;
-      case 'Đang chat':
+      case CHAT_MESSAGE_SCREEN_SECTIONLIST_CHATMESSAGE:
         return <ChatMessageItem item={item} />;
       default:
         break;
@@ -84,10 +88,10 @@ class ChatMessageScreen extends React.PureComponent {
         <SectionList
           sections={[
             {
-              title: 'Yêu cầu chat',
+              title: CHAT_MESSAGE_SCREEN_SECTIONLIST_REQUESTCHAT,
               data: mockDataChatRequest.slice(mockDataChatRequest.length - 1),
             },
-            { title: 'Đang chat', data: mockDataChatMessage },
+            { title: CHAT_MESSAGE_SCREEN_SECTIONLIST_CHATMESSAGE, data: mockDataChatMessage },
           ]}
           keyExtractor={this.keyExtractor}
           renderItem={({ item, section }) => this.renderItem(item, section)}

@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import MyButton from '../../components/common/MyButton';
+import { HOME_SCREEN } from '../../constants/strings/screenNames';
 
 const styles = StyleSheet.create({
   container: {
@@ -56,12 +57,8 @@ class UserRegisterDoneScreen extends React.PureComponent {
     }).isRequired,
   };
 
-  handleRegisterPress = () => {
-    this.props.navigation.navigate('RegisterScreen');
-  };
-
   handleStartPress = () => {
-    this.props.navigation.navigate('HomeScreen');
+    this.props.navigation.navigate(HOME_SCREEN);
   };
 
   render() {

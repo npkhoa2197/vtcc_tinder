@@ -2,6 +2,13 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import { withNavigation } from 'react-navigation';
+import {
+  MESSAGE_STATUS_SENT,
+  MESSAGE_STATUS_SEEN,
+  MESSAGE_STATUS_ERROR,
+  MESSAGE_STATUS_PENDING,
+} from '../../constants/strings/strings';
+import { CHAT_MESSAGE_DETAIL_SCREEN } from '../../constants/strings/screenNames';
 
 const styles = StyleSheet.create({
   container: {
@@ -59,15 +66,15 @@ const ChatMessageItem = (props) => {
   let icon = null;
   let iconSize = null;
   switch (status) {
-    case 'MSG_SENT':
+    case MESSAGE_STATUS_SENT:
       icon = msgSentIcon;
       iconSize = { width: 9, height: 7 };
       break;
-    case 'MSG_SEEN':
+    case MESSAGE_STATUS_SEEN:
       icon = msgSeenIcon;
       iconSize = { width: 13.8, height: 7 };
       break;
-    case 'MSG_ERROR':
+    case MESSAGE_STATUS_ERROR:
       icon = msgErrorIcon;
       iconSize = { width: 8, height: 8 };
       break;
@@ -78,7 +85,9 @@ const ChatMessageItem = (props) => {
   return (
     <TouchableOpacity
       onPress={() => {
-        props.navigation.navigate('ChatMessageDetailScreen');
+        props.navigation.navigate(CHAT_MESSAGE_DETAIL_SCREEN, {
+          chatFriendName: name,
+        });
       }}
     >
       <View style={styles.container}>
@@ -91,7 +100,10 @@ const ChatMessageItem = (props) => {
               <Text
                 style={[
                   styles.body,
-                  { color: status === 'MSG_PENDING' ? 'rgb(48, 49, 55)' : 'rgb(137, 139, 155)' },
+                  {
+                    color:
+                      status === MESSAGE_STATUS_PENDING ? 'rgb(48, 49, 55)' : 'rgb(137, 139, 155)',
+                  },
                 ]}
               >
                 {body}
@@ -103,7 +115,9 @@ const ChatMessageItem = (props) => {
           <Text
             style={[
               styles.time,
-              { color: status === 'MSG_PENDING' ? 'rgb(48, 49, 55)' : 'rgb(137, 139, 155)' },
+              {
+                color: status === MESSAGE_STATUS_PENDING ? 'rgb(48, 49, 55)' : 'rgb(137, 139, 155)',
+              },
             ]}
           >
             {time}

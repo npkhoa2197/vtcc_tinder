@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import MyButton from '../../components/common/MyButton';
+import { LOGIN_SCREEN, REGISTER_SCREEN } from '../../constants/strings/screenNames';
 // import { CustomFontStyle } from '../../constants/styles';
 
 // const { ProTextRegular, ProTextBold } = CustomFontStyle;
@@ -83,12 +84,15 @@ class UserFirstScreen extends React.PureComponent {
       navigate: PropTypes.func.isRequired,
     }).isRequired,
   };
+
   handleLoginPress = () => {
-    this.props.navigation.navigate('LoginScreen');
+    this.props.navigation.navigate(LOGIN_SCREEN);
   };
+
   handleRegisterPress = () => {
-    this.props.navigation.navigate('RegisterScreen');
+    this.props.navigation.navigate(REGISTER_SCREEN);
   };
+
   render() {
     return (
       <View style={styles.container}>

@@ -3,6 +3,7 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import CustomTextInputWithLabel from '../../components/loginComponents/CustomTextInputWithLabel';
 import MyButton from '../../components/common/MyButton';
+import { LOGIN_SCREEN, REGISTER_DONE_SCREEN } from '../../constants/strings/screenNames';
 
 const styles = StyleSheet.create({
   container: {
@@ -72,11 +73,11 @@ class UserRegisterScreen extends React.PureComponent {
   };
 
   handleLoginPress = () => {
-    this.props.navigation.navigate('LoginScreen');
+    this.props.navigation.navigate(LOGIN_SCREEN);
   };
 
   handleContinuePress = () => {
-    this.props.navigation.navigate('RegisterDoneScreen');
+    this.props.navigation.navigate(REGISTER_DONE_SCREEN);
   };
 
   render() {

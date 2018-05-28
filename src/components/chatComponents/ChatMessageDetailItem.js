@@ -1,6 +1,11 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
+import {
+  MESSAGE_STATUS_SENT,
+  MESSAGE_STATUS_ERROR,
+  MESSAGE_STATUS_SEEN,
+} from '../../constants/strings/strings';
 
 const styles = StyleSheet.create({
   container1: {
@@ -76,8 +81,6 @@ const msgSentIcon = require('../../assets/images/chatScreens/chatMessageSent.png
 const msgSeenIcon = require('../../assets/images/chatScreens/chatMessageSeen.png');
 const msgErrorIcon = require('../../assets/images/chatScreens/chatMessageError.png');
 
-console.log(msgSentIcon);
-
 const currentUserUID = 'WZXa10';
 
 const ChatMessageDetailItem = (props) => {
@@ -108,17 +111,17 @@ const ChatMessageDetailItem = (props) => {
   let iconSize = null;
 
   switch (status) {
-    case 'MSG_SENT':
+    case MESSAGE_STATUS_SENT:
       statusMsg = 'Đã nhận';
       icon = msgSentIcon;
       iconSize = { width: 9, height: 7 };
       break;
-    case 'MSG_RECEIVED':
+    case MESSAGE_STATUS_SEEN:
       statusMsg = 'Đã xem';
       icon = msgSeenIcon;
       iconSize = { width: 13.8, height: 7 };
       break;
-    case 'MSG_ERROR':
+    case MESSAGE_STATUS_ERROR:
       statusMsg = 'Gửi lỗi';
       icon = msgErrorIcon;
       iconSize = { width: 8, height: 8 };
@@ -128,7 +131,7 @@ const ChatMessageDetailItem = (props) => {
       break;
   }
 
-  if (status !== 'MSG_ERROR') {
+  if (status !== MESSAGE_STATUS_ERROR) {
     return (
       <TouchableOpacity onLongPress={() => props.onLongPress()}>
         <View style={styles.container2}>

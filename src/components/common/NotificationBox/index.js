@@ -8,14 +8,18 @@ class NotificationBox extends React.Component {
     boxTitle: PropTypes.string,
     boxBody: PropTypes.string,
     boxOkButtonText: PropTypes.string,
+    onOkPress: PropTypes.func,
     boxCancelButtonText: PropTypes.string,
+    onCancelPress: PropTypes.func,
   };
 
   static defaultProps = {
     boxTitle: 'Hộp thông báo',
     boxBody: 'Đây là nội dung hộp thông báo',
     boxOkButtonText: 'Đồng ý',
+    onOkPress: () => {},
     boxCancelButtonText: 'Thôi',
+    onCancelPress: () => {},
   };
 
   constructor(props) {
@@ -30,38 +34,35 @@ class NotificationBox extends React.Component {
     return nextState.visible !== this.state.visible;
   }
 
-  handleCancel = () => {
-    this.setState({ visible: false });
-  };
-
-  handleConfirm = () => {
-    this.setState({ visible: false });
-  };
-
   show = () => {
     this.setState({ visible: true });
   };
 
   render() {
     const {
-      boxTitle, boxBody, boxOkButtonText, boxCancelButtonText,
+      boxTitle,
+      boxBody,
+      boxOkButtonText,
+      onOkPress,
+      boxCancelButtonText,
+      onCancelPress,
     } = this.props;
     const { width, height } = Dimensions.get('window');
 
     if (this.state.visible) {
       return (
         <View style={[styles.outerContainer, { width, height }]}>
-          <TouchableWithoutFeedback onPress={this.handleCancel}>
+          <TouchableWithoutFeedback onPress={onCancelPress}>
             <View style={[styles.outerContainer, { width, height }]} />
           </TouchableWithoutFeedback>
           <View style={styles.innerContainer}>
             <Text style={styles.introText}>{boxTitle}</Text>
             <Text style={styles.bodyText}>{boxBody}</Text>
             <View style={styles.btnContainer}>
-              <Text style={styles.cancelText} onPress={this.handleCancel}>
+              <Text style={styles.cancelText} onPress={onCancelPress}>
                 {boxCancelButtonText}
               </Text>
-              <Text style={styles.okText} onPress={this.handleConfirm}>
+              <Text style={styles.okText} onPress={onOkPress}>
                 {boxOkButtonText}
               </Text>
             </View>

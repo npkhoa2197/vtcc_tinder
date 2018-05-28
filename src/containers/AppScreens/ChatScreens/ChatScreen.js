@@ -1,11 +1,21 @@
 import React from 'react';
 import { View, Animated, StatusBar, Dimensions, StyleSheet } from 'react-native';
 import { TabViewAnimated, TabBar, SceneMap } from 'react-native-tab-view';
+import PropTypes from 'prop-types';
 
 import Header from '../../../components/common/Header';
 import ChatMessageScreen from './ChatMessageScreen';
 import ChatRequestScreen from './ChatRequestScreen';
 import ChatBlacklistScreen from './ChatBlacklistScreen';
+import {
+  CHAT_MESSAGE_SCREEN,
+  CHAT_REQUEST_SCREEN,
+  CHAT_BLACK_LIST_SCREEN,
+  CHAT_CREATE_SCREEN,
+  CHAT_MESSAGE_SCREEN_TITLE,
+  CHAT_REQUEST_SCREEN_TITLE,
+  CHAT_BLACK_LIST_SCREEN_TITLE,
+} from '../../../constants/strings/screenNames';
 
 const styles = StyleSheet.create({
   container: {
@@ -25,18 +35,26 @@ const styles = StyleSheet.create({
   },
 });
 
+const rightButtonIcon = require('../../../assets/images/chatScreens/chatCreateIcon.png');
+
 const initialLayout = {
   height: 0,
   width: Dimensions.get('window').width,
 };
 
 export default class ChatScreen extends React.Component {
+  static propTypes = {
+    navigation: PropTypes.shape({
+      navigate: PropTypes.func.isRequired,
+    }).isRequired,
+  };
+
   state = {
     index: 0,
     routes: [
-      { key: 'CHAT_MESSAGE', title: 'ĐANG CHAT' },
-      { key: 'CHAT_REQUEST', title: 'YÊU CẦU CHAT' },
-      { key: 'CHAT_BLACK_LIST', title: 'DS. CHẶN' },
+      { key: CHAT_MESSAGE_SCREEN, title: CHAT_MESSAGE_SCREEN_TITLE },
+      { key: CHAT_REQUEST_SCREEN, title: CHAT_REQUEST_SCREEN_TITLE },
+      { key: CHAT_BLACK_LIST_SCREEN, title: CHAT_BLACK_LIST_SCREEN_TITLE },
     ],
   };
 
@@ -72,7 +90,14 @@ export default class ChatScreen extends React.Component {
     return (
       <View style={styles.container}>
         <StatusBar translucent backgroundColor="transparent" />
-        <Header headerText="Chat" backgroundColor="#3f51b5" textColor="#FFF" />
+        <Header
+          headerText="Chat"
+          backgroundColor="#3f51b5"
+          textColor="#FFF"
+          haveRightButton
+          rightButtonIcon={rightButtonIcon}
+          onRightButtonPress={() => this.props.navigation.navigate(CHAT_CREATE_SCREEN)}
+        />
         <TabViewAnimated
           navigationState={this.state}
           renderScene={this.renderScene}

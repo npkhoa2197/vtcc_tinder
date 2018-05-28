@@ -13,6 +13,7 @@ import ChatBlacklistNotificationScreen from '../containers/AppScreens/ChatScreen
 import ChatRequestScreen from '../containers/AppScreens/ChatScreens/ChatRequestScreen';
 import ChatRequestDetailScreen from '../containers/AppScreens/ChatScreens/ChatRequestDetailScreen';
 import ChatScreen from '../containers/AppScreens/ChatScreens/ChatScreen';
+import ChatCreateScreen from '../containers/AppScreens/ChatScreens/ChatCreateScreen';
 
 const homeTabIcon = require('../assets/images/app/homeTabIcon.png');
 const topicTabIcon = require('../assets/images/app/topicTabIcon.png');
@@ -114,6 +115,7 @@ const BottomNavigatorStack = createBottomTabNavigator(
           }
           return <Image style={{ width: 40, height: 40, opacity: 0.3 }} source={mediaTabIcon} />;
         },
+        tabBarLabel: () => null,
       },
     },
     Chat: {
@@ -146,10 +148,15 @@ const BottomNavigatorStack = createBottomTabNavigator(
 
 export const AppStack = createStackNavigator({
   BottomNavigatorStack: { screen: BottomNavigatorStack, navigationOptions: { header: null } },
-  ChatMessageDetailScreen,
-  ChatRequestDetailScreen,
+  ChatMessageDetailScreen: { screen: ChatMessageDetailScreen, navigationOptions: { header: null } },
+  ChatRequestDetailScreen: { screen: ChatRequestDetailScreen, navigationOptions: { header: null } },
   ChatBlacklistNotificationScreen: {
     screen: ChatBlacklistNotificationScreen,
     navigationOptions: { header: null },
   },
+  ChatBlacklistAddNewScreen: {
+    screen: ChatBlacklistAddNewScreen,
+    navigationOptions: { header: null },
+  },
+  ChatCreateScreen: { screen: ChatCreateScreen, navigationOptions: { header: null } },
 });

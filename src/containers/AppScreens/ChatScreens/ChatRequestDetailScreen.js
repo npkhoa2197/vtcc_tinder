@@ -1,7 +1,11 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
 import MyButton from '../../../components/common/MyButton';
 import ChatMessageDetailItem from '../../../components/chatComponents/ChatMessageDetailItem';
+import Header from '../../../components/common/Header';
+
+const optionIcon = require('../../../assets/images/chatScreens/chatMessageDetailOptionItemDefaultIcon.png');
 
 const styles = StyleSheet.create({
   container: {
@@ -104,9 +108,21 @@ const chatRequestAcceptIcon = require('../../../assets/images/chatScreens/chatRe
 const chatRequestDeclineIcon = require('../../../assets/images/chatScreens/chatRequestDeclineIcon.png');
 
 class ChatRequestDetailScreen extends React.PureComponent {
+  static propTypes = {
+    navigation: PropTypes.shape({
+      goBack: PropTypes.func.isRequired,
+    }).isRequired,
+  };
   render() {
     return (
       <View style={styles.container}>
+        <Header
+          headerText="Lê Bảo Hân"
+          isBack
+          onBackPress={() => this.props.navigation.goBack()}
+          haveRightButton
+          rightButtonIcon={optionIcon}
+        />
         <View style={styles.upperContainer}>
           <View style={styles.headerContainer}>
             <Image style={styles.avatar} source={avatar} />
@@ -146,7 +162,7 @@ class ChatRequestDetailScreen extends React.PureComponent {
           </View>
           <ChatMessageDetailItem
             item={{
-              messageBody:
+              body:
                 'Đây là thông điệp lúc request chat mà user Lê Bảo Hân đã nhập gửi tới người dùng.',
               time: '09:12 am',
             }}

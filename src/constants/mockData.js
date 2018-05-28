@@ -106,7 +106,7 @@ export const mockDataChatMessageDetail = [
     senderuid: 'WZXa10',
     body: 'Khi đã nhận nhưng chưa xem',
     time: '09:14 am',
-    status: 'MSG_RECEIVED',
+    status: 'MSG_SEEN',
   },
   {
     id: '5',

@@ -1,0 +1,16 @@
+export const LOGIN_SCREEN = 'LoginScreen';
+export const REGISTER_SCREEN = 'RegisterScreen';
+export const REGISTER_DONE_SCREEN = 'RegisterDoneScreen';
+export const HOME_SCREEN = 'HomeScreen';
+export const CHAT_MESSAGE_SCREEN = 'CHAT_MESSAGE';
+export const CHAT_MESSAGE_DETAIL_SCREEN = 'ChatMessageDetailScreen';
+export const CHAT_REQUEST_SCREEN = 'CHAT_REQUEST';
+export const CHAT_BLACK_LIST_SCREEN = 'CHAT_BLACK_LIST';
+export const CHAT_BLACK_LIST_ADD_NEW_SCREEN = 'ChatBlacklistAddNewScreen';
+export const CHAT_BLACK_LIST_NOTIFICATION_SCREEN = 'ChatBlacklistNotificationScreen';
+export const CHAT_CREATE_SCREEN = 'ChatCreateScreen';
+export const CHAT_MESSAGE_SCREEN_TITLE = 'ĐANG CHAT';
+export const CHAT_REQUEST_SCREEN_TITLE = 'YÊU CẦU CHAT';
+export const CHAT_BLACK_LIST_SCREEN_TITLE = 'DS. CHẶN';
+export const CHAT_MESSAGE_SCREEN_SECTIONLIST_CHATMESSAGE = 'Đang chat';
+export const CHAT_MESSAGE_SCREEN_SECTIONLIST_REQUESTCHAT = 'Yêu cầu chat';
