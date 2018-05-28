@@ -1,17 +1,9 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import PropTypes from 'prop-types';
-import Header from '../../../components/common/Header';
-import SearchBox from '../../../components/common/SearchBox';
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'stretch',
-    backgroundColor: '#FFF',
-  },
-});
+import Header from '../../../../components/common/Header';
+import SearchBox from '../../../../components/common/SearchBox';
+import { styles } from './styles';
 
 class ChatBlacklistAddNewScreen extends React.PureComponent {
   static propTypes = {

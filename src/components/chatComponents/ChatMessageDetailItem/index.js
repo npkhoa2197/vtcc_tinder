@@ -1,85 +1,17 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import {
   MESSAGE_STATUS_SENT,
   MESSAGE_STATUS_ERROR,
   MESSAGE_STATUS_SEEN,
-} from '../../constants/strings/strings';
+} from '../../../constants/strings/strings';
+import { styles } from './styles';
 
-const styles = StyleSheet.create({
-  container1: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    marginLeft: 10,
-    marginRight: 15,
-  },
-  container2: {
-    justifyContent: 'center',
-    alignItems: 'flex-end',
-    marginLeft: 10,
-    marginRight: 15,
-  },
-  leftContainer: {
-    marginRight: 5,
-  },
-  rightContainer: {
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-  },
-  messageContainer: {
-    width: 310,
-    borderRadius: 10,
-    backgroundColor: '#FFF',
-    marginBottom: 8,
-  },
-  statusContainer: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-  },
-  avatar: {
-    borderRadius: 14,
-    width: 35,
-    height: 35,
-  },
-  messageBody: {
-    fontSize: 15,
-    color: 'rgb(51, 51, 51)',
-    paddingTop: 14,
-    paddingBottom: 16,
-    paddingLeft: 13,
-    paddingRight: 12,
-  },
-  time: {
-    fontSize: 12,
-    color: 'rgb(153, 163, 171)',
-    marginBottom: 8,
-  },
-  icon: {
-    width: 13,
-    height: 8,
-    marginRight: 4,
-    marginBottom: 8,
-  },
-  status: {
-    fontSize: 12,
-    color: 'rgb(153, 163, 171)',
-    marginBottom: 8,
-  },
-  tryAgainText: {
-    color: 'rgb(63, 81, 181)',
-    fontSize: 12,
-    marginBottom: 8,
-    marginLeft: 5,
-  },
-});
-
-const avatar = require('../../assets/images/chatScreens/avatar1.png');
-const msgSentIcon = require('../../assets/images/chatScreens/chatMessageSent.png');
-const msgSeenIcon = require('../../assets/images/chatScreens/chatMessageSeen.png');
-const msgErrorIcon = require('../../assets/images/chatScreens/chatMessageError.png');
+const avatar = require('../../../assets/images/chatScreens/avatar1.png');
+const msgSentIcon = require('../../../assets/images/chatScreens/chatMessageSent.png');
+const msgSeenIcon = require('../../../assets/images/chatScreens/chatMessageSeen.png');
+const msgErrorIcon = require('../../../assets/images/chatScreens/chatMessageError.png');
 
 const currentUserUID = 'WZXa10';
 

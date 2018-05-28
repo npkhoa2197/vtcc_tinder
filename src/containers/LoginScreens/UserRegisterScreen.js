@@ -80,6 +80,58 @@ class UserRegisterScreen extends React.PureComponent {
     this.props.navigation.navigate(REGISTER_DONE_SCREEN);
   };
 
+  renderHeader = () => (
+    <View style={styles.headerContainer}>
+      <Image style={styles.headerImage} source={headerImage} />
+      <Text style={styles.textDescription}>
+        Hệ thống đang trong giai đoạn thử nghiệm, vui lòng sử dụng số điện thoại Viettel để đăng ký.
+      </Text>
+    </View>
+  );
+
+  renderTextInputs = () => (
+    <View style={styles.inputFieldContainer}>
+      <CustomTextInputWithLabel
+        label="Email / Số điện thoại"
+        placeholder="Nhập email hoặc số điện thoại của bạn"
+      />
+      <CustomTextInputWithLabel label="Mật khẩu" placeholder="••••••••" secureTextEntry />
+      <CustomTextInputWithLabel label="Xác nhận mật khẩu" placeholder="••••••••" secureTextEntry />
+    </View>
+  );
+
+  renderButtons = () => (
+    <View style={styles.buttonContainer}>
+      <MyButton
+        text="Tiếp tục"
+        color="rgb(63, 81, 181)"
+        textColor="rgb(255, 255, 255)"
+        iconWidth={20}
+        iconHeight={20}
+        borderColor="rgb(63, 81, 181)"
+        onPress={this.handleContinuePress}
+      />
+      <MyButton
+        text="Đăng ký bằng Facebook"
+        color="rgb(255, 255, 255)"
+        textColor="rgb(63, 81, 181)"
+        iconWidth={20}
+        iconHeight={20}
+        icon={fbLogo}
+        borderColor="rgb(59, 87, 157)"
+      />
+    </View>
+  );
+
+  renderFooterTexts = () => (
+    <View style={styles.footerTextContainer}>
+      <Text style={styles.footerText1}>Bạn đã có tài khoản? </Text>
+      <Text style={styles.footerText2} onPress={this.handleLoginPress}>
+        Đăng nhập
+      </Text>
+    </View>
+  );
+
   render() {
     return (
       <View style={styles.container}>
@@ -89,51 +141,10 @@ class UserRegisterScreen extends React.PureComponent {
           resizeMode="contain"
           resizeMethod="resize"
         />
-        <View style={styles.headerContainer}>
-          <Image style={styles.headerImage} source={headerImage} />
-          <Text style={styles.textDescription}>
-            Hệ thống đang trong giai đoạn thử nghiệm, vui lòng sử dụng số điện thoại Viettel để đăng
-            ký.
-          </Text>
-        </View>
-        <View style={styles.inputFieldContainer}>
-          <CustomTextInputWithLabel
-            label="Email / Số điện thoại"
-            placeholder="Nhập email hoặc số điện thoại của bạn"
-          />
-          <CustomTextInputWithLabel label="Mật khẩu" placeholder="••••••••" secureTextEntry />
-          <CustomTextInputWithLabel
-            label="Xác nhận mật khẩu"
-            placeholder="••••••••"
-            secureTextEntry
-          />
-        </View>
-        <View style={styles.buttonContainer}>
-          <MyButton
-            text="Tiếp tục"
-            color="rgb(63, 81, 181)"
-            textColor="rgb(255, 255, 255)"
-            iconWidth={20}
-            iconHeight={20}
-            borderColor="rgb(63, 81, 181)"
-            onPress={this.handleContinuePress}
-          />
-          <MyButton
-            text="Đăng ký bằng Facebook"
-            color="rgb(255, 255, 255)"
-            textColor="rgb(63, 81, 181)"
-            iconWidth={20}
-            iconHeight={20}
-            icon={fbLogo}
-            borderColor="rgb(59, 87, 157)"
-          />
-        </View>
-        <View style={styles.footerTextContainer}>
-          <Text style={styles.footerText1}>Bạn đã có tài khoản? </Text>
-          <Text style={styles.footerText2} onPress={this.handleLoginPress}>
-            Đăng nhập
-          </Text>
-        </View>
+        {this.renderHeader()}
+        {this.renderTextInputs()}
+        {this.renderButtons()}
+        {this.renderFooterTexts()}
       </View>
     );
   }

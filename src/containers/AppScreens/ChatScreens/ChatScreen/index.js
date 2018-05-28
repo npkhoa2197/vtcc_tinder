@@ -1,12 +1,12 @@
 import React from 'react';
-import { View, Animated, StatusBar, Dimensions, StyleSheet } from 'react-native';
+import { View, Animated, StatusBar, Dimensions } from 'react-native';
 import { TabViewAnimated, TabBar, SceneMap } from 'react-native-tab-view';
 import PropTypes from 'prop-types';
 
-import Header from '../../../components/common/Header';
-import ChatMessageScreen from './ChatMessageScreen';
-import ChatRequestScreen from './ChatRequestScreen';
-import ChatBlacklistScreen from './ChatBlacklistScreen';
+import Header from '../../../../components/common/Header';
+import ChatMessageScreen from '../ChatMessageScreen';
+import ChatRequestScreen from '../ChatRequestScreen';
+import ChatBlacklistScreen from '../ChatBlacklistScreen';
 import {
   CHAT_MESSAGE_SCREEN,
   CHAT_REQUEST_SCREEN,
@@ -15,27 +15,10 @@ import {
   CHAT_MESSAGE_SCREEN_TITLE,
   CHAT_REQUEST_SCREEN_TITLE,
   CHAT_BLACK_LIST_SCREEN_TITLE,
-} from '../../../constants/strings/screenNames';
+} from '../../../../constants/strings/screenNames';
+import { styles } from './styles';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  labelStyle: {
-    fontSize: 14,
-    color: 'rgb(63, 81, 181)',
-  },
-  tabBarStyle: {
-    backgroundColor: '#FFF',
-    paddingTop: 10,
-    paddingBottom: 10,
-  },
-  tabBarIndicatorStyle: {
-    backgroundColor: '#FFF',
-  },
-});
-
-const rightButtonIcon = require('../../../assets/images/chatScreens/chatCreateIcon.png');
+const rightButtonIcon = require('../../../../assets/images/chatScreens/chatCreateIcon.png');
 
 const initialLayout = {
   height: 0,

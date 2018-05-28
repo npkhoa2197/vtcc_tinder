@@ -1,27 +1,8 @@
 import React from 'react';
-import { View, Text, SectionList, StyleSheet } from 'react-native';
-import { mockDataChatRequest } from '../../../constants/mockData';
-import ChatRequestItem from '../../../components/chatComponents/ChatRequestItem';
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'stretch',
-    backgroundColor: '#FFF',
-  },
-  headerText: {
-    fontSize: 14,
-    color: 'rgb(48, 49, 55)',
-    marginLeft: 15,
-    marginTop: 20,
-    marginBottom: 20,
-  },
-  separator: {
-    height: 1,
-    backgroundColor: 'rgb(230, 230, 230)',
-  },
-});
+import { View, Text, SectionList } from 'react-native';
+import { mockDataChatRequest } from '../../../../constants/mockData';
+import ChatRequestItem from '../../../../components/chatComponents/ChatRequestItem';
+import { styles } from './styles';
 
 class ChatRequestScreen extends React.PureComponent {
   keyExtractor = item => item.id;

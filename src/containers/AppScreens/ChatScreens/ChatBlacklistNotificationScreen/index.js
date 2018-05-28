@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import PropTypes from 'prop-types';
-import NotificationBox from '../../../components/common/NotificationBox';
+import NotificationBox from '../../../../components/common/NotificationBox';
 
 class ChatBlacklistNotificationScreen extends React.PureComponent {
   static propTypes = {

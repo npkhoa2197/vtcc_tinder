@@ -93,46 +93,51 @@ class UserFirstScreen extends React.PureComponent {
     this.props.navigation.navigate(REGISTER_SCREEN);
   };
 
+  renderLogoAndAppDescription = () => (
+    <View style={styles.headerContainer}>
+      <Image style={styles.logo} source={logo} />
+      <Text style={styles.bigDescription}>Mở ra kho tri thức</Text>
+      <View style={styles.smallDescriptionContainer}>
+        <Text style={styles.smallDescription}>Hỏi. Chia sẻ. Bàn luận.</Text>
+        <Text style={styles.smallDescription}>Nhận giải đáp từ chuyên gia.</Text>
+      </View>
+    </View>
+  );
+
+  renderFooterButtonsAndTexts = () => (
+    <View style={styles.footerContainer}>
+      <MyButton
+        text="Đăng nhập"
+        color="rgb(32, 150, 255)"
+        textColor="rgb(255, 255, 255)"
+        borderColor="rgb(32, 150, 255)"
+        onPress={this.handleLoginPress}
+      />
+      <MyButton
+        text="Đăng nhập bằng Facebook"
+        color="rgb(255, 255, 255)"
+        textColor="rgb(63, 81, 181)"
+        iconWidth={20}
+        iconHeight={20}
+        borderColor="rgb(255, 255, 255)"
+        icon={fbLogo}
+      />
+      <View style={styles.footerTextContainer}>
+        <Text style={styles.orText}>hoặc</Text>
+        <Text style={[styles.registerText, { marginTop: 8 }]} onPress={this.handleRegisterPress}>
+          Đăng ký tài khoản mới
+        </Text>
+      </View>
+    </View>
+  );
+
   render() {
     return (
       <View style={styles.container}>
         <Image style={styles.backgroundImageStyle} source={backgroundImage} resizeMode="contain" />
         <Image style={styles.bodyImage} source={bodyImage} />
-        <View style={styles.headerContainer}>
-          <Image style={styles.logo} source={logo} />
-          <Text style={styles.bigDescription}>Mở ra kho tri thức</Text>
-          <View style={styles.smallDescriptionContainer}>
-            <Text style={styles.smallDescription}>Hỏi. Chia sẻ. Bàn luận.</Text>
-            <Text style={styles.smallDescription}>Nhận giải đáp từ chuyên gia.</Text>
-          </View>
-        </View>
-        <View style={styles.footerContainer}>
-          <MyButton
-            text="Đăng nhập"
-            color="rgb(32, 150, 255)"
-            textColor="rgb(255, 255, 255)"
-            borderColor="rgb(32, 150, 255)"
-            onPress={this.handleLoginPress}
-          />
-          <MyButton
-            text="Đăng nhập bằng Facebook"
-            color="rgb(255, 255, 255)"
-            textColor="rgb(63, 81, 181)"
-            iconWidth={20}
-            iconHeight={20}
-            borderColor="rgb(255, 255, 255)"
-            icon={fbLogo}
-          />
-          <View style={styles.footerTextContainer}>
-            <Text style={styles.orText}>hoặc</Text>
-            <Text
-              style={[styles.registerText, { marginTop: 8 }]}
-              onPress={this.handleRegisterPress}
-            >
-              Đăng ký tài khoản mới
-            </Text>
-          </View>
-        </View>
+        {this.renderLogoAndAppDescription()}
+        {this.renderFooterButtonsAndTexts()}
       </View>
     );
   }

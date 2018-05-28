@@ -1,50 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableWithoutFeedback, Image, Platform } from 'react-native';
+import { View, Text, TouchableWithoutFeedback, Image, Platform } from 'react-native';
 import PropTypes from 'prop-types';
+import { styles } from './styles';
 
-const styles = StyleSheet.create({
-  container: {
-    height: 44,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingLeft: 15,
-    paddingRight: 17,
-  },
-  containerIos: {
-    height: 44 + 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingTop: 20,
-    paddingLeft: 15,
-    paddingRight: 17,
-  },
-  innerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-  },
-  backButton: {
-    width: 24,
-    height: 24,
-    marginRight: 17,
-  },
-  rightButton: {
-    width: 24,
-    height: 24,
-  },
-  imageStyle: {
-    height: 50,
-    width: 50,
-  },
-  titleStyle: {
-    fontSize: 17,
-  },
-});
-
-const defaulticon = require('../../assets/images/chatScreens/chatMessageDetailOptionItemDefaultIcon.png');
-const backIcon = require('../../assets/images/chatScreens/backButtonIcon.png');
+const defaulticon = require('../../../assets/images/chatScreens/chatMessageDetailOptionItemDefaultIcon.png');
+const backIcon = require('../../../assets/images/chatScreens/backButtonIcon.png');
 
 const isIos = Platform.OS === 'ios';
 
