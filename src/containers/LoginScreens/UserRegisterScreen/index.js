@@ -1,10 +1,14 @@
 import React from 'react';
 import { View, Text, Image } from 'react-native';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import CustomTextInputWithLabel from '../../../components/loginComponents/CustomTextInputWithLabel';
 import MyButton from '../../../components/common/MyButton';
+import LoadingSpinner from '../../../components/LoadingSpinner';
 import { LOGIN_SCREEN, REGISTER_DONE_SCREEN } from '../../../constants/strings/screenNames';
 import { styles } from './styles';
+import { requestRegister } from '../../../actions/loginActions';
+import ToastAlert from '../../../components/common/ToastAlert';
 
 const backgroundImage = require('../../../assets/images/loginScreens/registerBackground.png');
 const headerImage = require('../../../assets/images/loginScreens/registerHeaderImage.png');
@@ -12,17 +16,49 @@ const fbLogo = require('../../../assets/images/loginScreens/fbLogo.png');
 
 class UserRegisterScreen extends React.PureComponent {
   static propTypes = {
+    isLoggedIn: PropTypes.bool.isRequired,
+    isLoggingIn: PropTypes.bool.isRequired,
+    error: PropTypes.string.isRequired,
+    requestRegister: PropTypes.func.isRequired,
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
+      replace: PropTypes.func.isRequired,
     }).isRequired,
   };
 
+  componentDidUpdate() {
+    const { isLoggedIn, error } = this.props;
+    if (isLoggedIn) {
+      this.props.navigation.navigate(REGISTER_DONE_SCREEN);
+    } else if (error !== '') {
+      let notiText = '';
+      switch (error) {
+        case 'auth/email-already-in-use':
+          notiText = 'Email đã được sử dụng';
+          break;
+        case 'auth/invalid-email':
+          notiText = 'Email không hợp lệ';
+          break;
+        case 'auth/weak-password':
+          notiText = 'Password yếu';
+          break;
+        default:
+          break;
+      }
+      this.toastAlertRef.show(notiText);
+    }
+  }
+
   handleLoginPress = () => {
-    this.props.navigation.navigate(LOGIN_SCREEN);
+    this.props.navigation.replace(LOGIN_SCREEN);
   };
 
   handleContinuePress = () => {
-    this.props.navigation.navigate(REGISTER_DONE_SCREEN);
+    if (this.password !== this.retypedPassword) {
+      this.toastAlertRef.show('Mật khẩu xác nhận không trùng khớp');
+      return;
+    }
+    this.props.requestRegister(this.email, this.password);
   };
 
   renderHeader = () => (
@@ -39,9 +75,26 @@ class UserRegisterScreen extends React.PureComponent {
       <CustomTextInputWithLabel
         label="Email / Số điện thoại"
         placeholder="Nhập email hoặc số điện thoại của bạn"
+        onChangeText={(email) => {
+          this.email = email;
+        }}
       />
-      <CustomTextInputWithLabel label="Mật khẩu" placeholder="••••••••" secureTextEntry />
-      <CustomTextInputWithLabel label="Xác nhận mật khẩu" placeholder="••••••••" secureTextEntry />
+      <CustomTextInputWithLabel
+        label="Mật khẩu"
+        placeholder="••••••••"
+        secureTextEntry
+        onChangeText={(password) => {
+          this.password = password;
+        }}
+      />
+      <CustomTextInputWithLabel
+        label="Xác nhận mật khẩu"
+        placeholder="••••••••"
+        secureTextEntry
+        onChangeText={(retypedPassword) => {
+          this.retypedPassword = retypedPassword;
+        }}
+      />
     </View>
   );
 
@@ -78,6 +131,8 @@ class UserRegisterScreen extends React.PureComponent {
   );
 
   render() {
+    const { isLoggingIn } = this.props;
+
     return (
       <View style={styles.container}>
         <Image
@@ -90,9 +145,25 @@ class UserRegisterScreen extends React.PureComponent {
         {this.renderTextInputs()}
         {this.renderButtons()}
         {this.renderFooterTexts()}
+        <LoadingSpinner visible={isLoggingIn} size="large" color="blue" />;
+        <ToastAlert
+          ref={(ref) => {
+            this.toastAlertRef = ref;
+          }}
+        />
       </View>
     );
   }
 }
 
-export default UserRegisterScreen;
+const mapStateToProps = state => ({
+  isLoggingIn: state.login.isLoggingIn,
+  isLoggedIn: state.login.isLoggedIn,
+  error: state.login.error,
+});
+
+const mapDispatchToProps = dispatch => ({
+  requestRegister: (email, password) => dispatch(requestRegister(email, password)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserRegisterScreen);

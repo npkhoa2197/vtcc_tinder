@@ -1,8 +1,8 @@
 export const FIREBASE_CONFIG = {
-  apiKey: 'AIzaSyD51wNw_IDL6kIzeir__2Bl448aaoLkahs',
-  authDomain: 'social-network-f437d.firebaseapp.com',
-  databaseURL: 'https://social-network-f437d.firebaseio.com',
-  projectId: 'social-network-f437d',
-  storageBucket: 'social-network-f437d.appspot.com',
-  messagingSenderId: '933040599154',
+  apiKey: 'AIzaSyAEWheVLiNPZBb8jXcA4mQibuReEZjy6SY',
+  authDomain: 'ereka-chat.firebaseapp.com',
+  databaseURL: 'https://ereka-chat.firebaseio.com',
+  projectId: 'ereka-chat',
+  storageBucket: 'ereka-chat.appspot.com',
+  messagingSenderId: '441086524948',
 };

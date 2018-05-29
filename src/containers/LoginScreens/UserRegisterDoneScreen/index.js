@@ -3,6 +3,7 @@ import { View, Text, Image } from 'react-native';
 import PropTypes from 'prop-types';
 import MyButton from '../../../components/common/MyButton';
 import { HOME_SCREEN } from '../../../constants/strings/screenNames';
+import { styles } from './styles';
 
 const headerImageBackground = require('../../../assets/images/loginScreens/registerScreenDoneHeaderBackground.png');
 const bodyImage = require('../../../assets/images/loginScreens/registerDoneScreenBodyImage.png');

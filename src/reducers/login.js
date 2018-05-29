@@ -1,34 +1,30 @@
-// import {
-//   LOGIN_PENDING,
-//   LOGIN_SUCCESS,
-//   LOGIN_FAIL,
-//   LOGOUT_PENDING,
-//   LOGOUT_SUCCESS,
-//   LOGOUT_FAIL
-// } from "../actions/types";
-
-import { LOGIN_PENDING, LOGIN_SUCCESS, LOGIN_FAIL } from '../actions/types';
+import {
+  REGISTER_PENDING,
+  REGISTER_SUCESS,
+  REGISTER_FAIL,
+  LOGIN_PENDING,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+} from '../constants/strings/actionTypes';
 
 const login = (
   state = {
-    isLoggingIn: false,
+    error: '',
     isLoggedIn: false,
+    isLoggingIn: false,
   },
   action,
 ) => {
   switch (action.type) {
+    case REGISTER_PENDING:
     case LOGIN_PENDING:
-      return { isLoggingIn: true, isLoggedIn: false };
+      return { ...state, isLoggingIn: true };
+    case REGISTER_SUCESS:
     case LOGIN_SUCCESS:
-      return { isLoggingIn: false, isLoggedIn: true };
+      return { isLoggedIn: true, isLoggingIn: false };
+    case REGISTER_FAIL:
     case LOGIN_FAIL:
-      return { ...state, isLoggingIn: false };
-    // case LOGOUT_PENDING:
-    //   return { isLoggingIn: true, isLoggedIn: true };
-    // case LOGOUT_SUCCESS:
-    //   return { isLoggingIn: false, isLoggedIn: false };
-    // case LOGOUT_FAIL:
-    //   return { ...state, isLoggingIn: false };
+      return { ...state, isLoggingIn: false, error: action.payload };
     default:
       return state;
   }
