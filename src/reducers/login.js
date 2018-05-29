@@ -5,6 +5,7 @@ import {
   LOGIN_PENDING,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
+  LOGOUT_REQUEST,
 } from '../constants/strings/actionTypes';
 
 const login = (
@@ -18,13 +19,15 @@ const login = (
   switch (action.type) {
     case REGISTER_PENDING:
     case LOGIN_PENDING:
-      return { ...state, isLoggingIn: true };
+      return { ...state, isLoggingIn: true, error: '' };
     case REGISTER_SUCESS:
     case LOGIN_SUCCESS:
-      return { isLoggedIn: true, isLoggingIn: false };
+      return { error: '', isLoggedIn: true, isLoggingIn: false };
     case REGISTER_FAIL:
     case LOGIN_FAIL:
       return { ...state, isLoggingIn: false, error: action.payload };
+    case LOGOUT_REQUEST:
+      return { ...state, isLoggedIn: false };
     default:
       return state;
   }

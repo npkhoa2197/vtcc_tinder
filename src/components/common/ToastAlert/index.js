@@ -18,7 +18,7 @@ class ToastAlert extends React.Component {
 
   show = (message) => {
     this.setState({ visible: true, text: message });
-    setTimeout(() => this.setState({ visible: false, text: '' }), 2000);
+    setTimeout(() => this.setState({ visible: false, text: '' }), 1000);
   };
 
   render() {

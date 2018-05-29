@@ -7,6 +7,7 @@ import {
   LOGIN_PENDING,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
+  LOGOUT_REQUEST,
 } from '../constants/strings/actionTypes';
 
 export const requestRegister = (email, password) => ({
@@ -39,3 +40,5 @@ export const loginPending = () => ({ type: LOGIN_PENDING });
 export const loginSuccess = username => ({ types: LOGIN_SUCCESS, payload: username });
 
 export const loginFail = errorMsg => ({ type: LOGIN_FAIL, payload: errorMsg });
+
+export const requestLogout = () => ({ type: LOGOUT_REQUEST });

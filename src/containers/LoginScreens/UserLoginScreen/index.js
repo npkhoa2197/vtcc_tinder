@@ -31,7 +31,6 @@ class UserLoginScreen extends React.PureComponent {
     if (isLoggedIn) {
       this.props.navigation.navigate(HOME_SCREEN);
     } else if (error !== '') {
-      console.log('hadhsahdsa');
       let notiText = '';
       switch (error) {
         case 'auth/invalid-email':
@@ -40,7 +39,8 @@ class UserLoginScreen extends React.PureComponent {
         case 'auth/user-disabled':
           notiText = 'Có lỗi xảy ra';
           break;
-        case 'auth/user-not-found' || 'auth/wrong-password':
+        case 'auth/user-not-found':
+        case 'auth/wrong-password':
           notiText = 'Email hoặc mật khẩu không đúng';
           break;
         default:
@@ -69,8 +69,18 @@ class UserLoginScreen extends React.PureComponent {
       <CustomTextInputWithLabel
         label="Email / Số điện thoại"
         placeholder="Nhập email hoặc số điện thoại của bạn"
+        onChangeText={(email) => {
+          this.email = email;
+        }}
       />
-      <CustomTextInputWithLabel label="Mật khẩu" placeholder="••••••••" secureTextEntry />
+      <CustomTextInputWithLabel
+        label="Mật khẩu"
+        placeholder="••••••••"
+        secureTextEntry
+        onChangeText={(password) => {
+          this.password = password;
+        }}
+      />
       <Text>Ghi nhớ tài khoản</Text>
     </View>
   );

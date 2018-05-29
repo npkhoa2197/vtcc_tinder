@@ -9,6 +9,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGIN_REQUEST,
+  LOGOUT_REQUEST,
 } from '../constants/strings/actionTypes';
 
 function* registerWithFirebase({ payload }) {
@@ -39,4 +40,16 @@ function* authorizeWithFirebase({ payload }) {
 
 export function* watchLogin() {
   yield takeLatest(LOGIN_REQUEST, authorizeWithFirebase);
+}
+
+function* signOut() {
+  try {
+    yield call([firebase.auth(), firebase.auth().signOut]);
+  } catch (e) {
+    // do nothing
+  }
+}
+
+export function* watchLogout() {
+  yield takeLatest(LOGOUT_REQUEST, signOut);
 }
