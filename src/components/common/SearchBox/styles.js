@@ -3,7 +3,6 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   searchBoxContainer: {
     flexDirection: 'row',
-    justifyContent: 'flex-start',
     alignItems: 'center',
     marginLeft: 15,
     marginTop: 15,
@@ -15,8 +14,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   searchText: {
+    flex: 1,
     fontSize: 16,
-    color: 'rgb(174, 180, 187)',
   },
 });
 

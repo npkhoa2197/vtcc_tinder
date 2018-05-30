@@ -1,5 +1,13 @@
 import React from 'react';
-import { View, FlatList, Modal, TouchableWithoutFeedback, StatusBar } from 'react-native';
+import {
+  View,
+  FlatList,
+  Modal,
+  TouchableWithoutFeedback,
+  StatusBar,
+  TextInput,
+  Image,
+} from 'react-native';
 import PropTypes from 'prop-types';
 import { mockDataChatMessageDetail } from '../../../../constants/mockData';
 import ChatMessageDetailItem from '../../../../components/chatComponents/ChatMessageDetailItem';
@@ -14,6 +22,7 @@ const viewProfileIcon = require('../../../../assets/images/chatScreens/chatMessa
 const notiIcon = require('../../../../assets/images/chatScreens/chatMessageDetailOptionNotiIcon.png');
 const blockIcon = require('../../../../assets/images/chatScreens/chatMessageDetailOptionBlockIcon.png');
 const rightButtonIcon = require('../../../../assets/images/chatScreens/chatMessageDetailOptionIcon.png');
+const sendButtonIcon = require('../../../../assets/images/chatScreens/sendButtonIcon.png');
 
 class ChatMessageDetailScreen extends React.PureComponent {
   static propTypes = {
@@ -52,12 +61,24 @@ class ChatMessageDetailScreen extends React.PureComponent {
   renderItem = item => <ChatMessageDetailItem item={item} onLongPress={this.onLongPress} />;
 
   renderList = () => (
-    <View style={styles.messageListContainer}>
-      <FlatList
-        data={mockDataChatMessageDetail}
-        keyExtractor={this.keyExtractor}
-        renderItem={({ item }) => this.renderItem(item)}
-      />
+    <FlatList
+      data={mockDataChatMessageDetail}
+      keyExtractor={this.keyExtractor}
+      renderItem={({ item }) => this.renderItem(item)}
+      ListHeaderComponent={() => <View style={{ height: 16 }} />}
+    />
+  );
+
+  renderInputField = () => (
+    <View style={styles.inputFieldContainer}>
+      <View style={styles.textInputContainer}>
+        <TextInput
+          style={styles.textInput}
+          placeholder="Nhập nội dung chat"
+          placeholderTextColor="rgb(174, 180, 187)"
+        />
+      </View>
+      <Image style={styles.icon} source={sendButtonIcon} />
     </View>
   );
 
@@ -107,6 +128,7 @@ class ChatMessageDetailScreen extends React.PureComponent {
           onRightButtonPress={this.onRightButtonHeaderPress}
         />
         {this.renderList()}
+        {this.renderInputField()}
         {this.renderModalMessageOption()}
         {this.renderModalMainOption()}
       </View>

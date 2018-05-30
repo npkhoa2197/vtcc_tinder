@@ -8,6 +8,8 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT_REQUEST,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAIL,
 } from '../constants/strings/actionTypes';
 
 export const requestRegister = (email, password) => ({
@@ -42,3 +44,7 @@ export const loginSuccess = username => ({ types: LOGIN_SUCCESS, payload: userna
 export const loginFail = errorMsg => ({ type: LOGIN_FAIL, payload: errorMsg });
 
 export const requestLogout = () => ({ type: LOGOUT_REQUEST });
+
+export const logoutSuccess = () => ({ type: LOGOUT_SUCCESS });
+
+export const logoutFail = errorMsg => ({ type: LOGOUT_FAIL, payload: errorMsg });

@@ -146,17 +146,28 @@ const BottomNavigatorStack = createBottomTabNavigator(
   },
 );
 
-export const AppStack = createStackNavigator({
-  BottomNavigatorStack: { screen: BottomNavigatorStack, navigationOptions: { header: null } },
-  ChatMessageDetailScreen: { screen: ChatMessageDetailScreen, navigationOptions: { header: null } },
-  ChatRequestDetailScreen: { screen: ChatRequestDetailScreen, navigationOptions: { header: null } },
-  ChatBlacklistNotificationScreen: {
-    screen: ChatBlacklistNotificationScreen,
-    navigationOptions: { header: null },
+export const AppStack = createStackNavigator(
+  {
+    BottomNavigatorStack: { screen: BottomNavigatorStack, navigationOptions: { header: null } },
+    ChatMessageDetailScreen: {
+      screen: ChatMessageDetailScreen,
+      navigationOptions: { header: null },
+    },
+    ChatRequestDetailScreen: {
+      screen: ChatRequestDetailScreen,
+      navigationOptions: { header: null },
+    },
+    ChatBlacklistNotificationScreen: {
+      screen: ChatBlacklistNotificationScreen,
+      navigationOptions: { header: null },
+    },
+    ChatBlacklistAddNewScreen: {
+      screen: ChatBlacklistAddNewScreen,
+      navigationOptions: { header: null },
+    },
+    ChatCreateScreen: { screen: ChatCreateScreen, navigationOptions: { header: null } },
   },
-  ChatBlacklistAddNewScreen: {
-    screen: ChatBlacklistAddNewScreen,
-    navigationOptions: { header: null },
+  {
+    initialRouteName: 'BottomNavigatorStack',
   },
-  ChatCreateScreen: { screen: ChatCreateScreen, navigationOptions: { header: null } },
-});
+);

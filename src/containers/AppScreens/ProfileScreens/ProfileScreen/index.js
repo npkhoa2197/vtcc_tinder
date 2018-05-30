@@ -2,6 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { firestore } from '../../../../utilities/configFirebase';
 import { styles } from './styles';
 import MyButton from '../../../../components/common/MyButton';
 import { requestLogout } from '../../../../actions/loginActions';
@@ -11,6 +12,9 @@ class ProfileScreen extends React.PureComponent {
   static propTypes = {
     isLoggedIn: PropTypes.bool.isRequired,
     requestLogout: PropTypes.func.isRequired,
+    navigation: PropTypes.shape({
+      navigate: PropTypes.func.isRequired,
+    }).isRequired,
   };
 
   componentDidUpdate() {
@@ -24,6 +28,14 @@ class ProfileScreen extends React.PureComponent {
     this.props.requestLogout();
   };
 
+  handleTestFirestorePress = () => {
+    firestore.collection('users').onSnapshot((querySnapshot) => {
+      querySnapshot.forEach((snapshot) => {
+        console.log(snapshot.data());
+      });
+    });
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -33,6 +45,13 @@ class ProfileScreen extends React.PureComponent {
           textColor="rgb(255, 255, 255)"
           borderColor="rgb(63, 81, 181)"
           onPress={this.handleLogoutPress}
+        />
+        <MyButton
+          text="test firestore"
+          color="rgb(63, 81, 181)"
+          textColor="rgb(255, 255, 255)"
+          borderColor="rgb(63, 81, 181)"
+          onPress={this.handleTestFirestorePress}
         />
       </View>
     );

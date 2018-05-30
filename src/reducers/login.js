@@ -5,7 +5,8 @@ import {
   LOGIN_PENDING,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  LOGOUT_REQUEST,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAIL,
 } from '../constants/strings/actionTypes';
 
 const login = (
@@ -26,8 +27,10 @@ const login = (
     case REGISTER_FAIL:
     case LOGIN_FAIL:
       return { ...state, isLoggingIn: false, error: action.payload };
-    case LOGOUT_REQUEST:
+    case LOGOUT_SUCCESS:
       return { ...state, isLoggedIn: false };
+    case LOGOUT_FAIL:
+      return { ...state, error: action.payload };
     default:
       return state;
   }

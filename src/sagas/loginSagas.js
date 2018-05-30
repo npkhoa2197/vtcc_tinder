@@ -10,6 +10,8 @@ import {
   LOGIN_FAIL,
   LOGIN_REQUEST,
   LOGOUT_REQUEST,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAIL,
 } from '../constants/strings/actionTypes';
 
 function* registerWithFirebase({ payload }) {
@@ -45,8 +47,9 @@ export function* watchLogin() {
 function* signOut() {
   try {
     yield call([firebase.auth(), firebase.auth().signOut]);
+    yield put({ type: LOGOUT_SUCCESS });
   } catch (e) {
-    // do nothing
+    yield put({ type: LOGOUT_FAIL, payload: e.message });
   }
 }
 

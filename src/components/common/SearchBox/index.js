@@ -11,7 +11,7 @@ const SearchBox = (props) => {
     <View style={styles.searchBoxContainer}>
       <Image style={styles.searchIcon} source={searchIcon} />
       <TextInput
-        style={{ fontSize: 16 }}
+        style={styles.searchText}
         multiline={false}
         placeholder={placeholder}
         placeholderTextColor="rgb(174, 180, 187)"

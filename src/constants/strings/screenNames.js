@@ -1,3 +1,4 @@
+export const USER_FIRST_SCREEN = 'UserFirstScreen';
 export const LOGIN_SCREEN = 'LoginScreen';
 export const REGISTER_SCREEN = 'RegisterScreen';
 export const REGISTER_DONE_SCREEN = 'RegisterDoneScreen';

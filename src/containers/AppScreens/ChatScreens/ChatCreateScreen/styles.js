@@ -3,14 +3,12 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'stretch',
+    justifyContent: 'flex-start',
     backgroundColor: '#FFF',
   },
   innerContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    alignSelf: 'flex-start',
     backgroundColor: '#FFF',
     paddingLeft: 22,
     paddingTop: 12,
