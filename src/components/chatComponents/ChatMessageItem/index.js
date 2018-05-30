@@ -11,14 +11,13 @@ import {
 import { CHAT_MESSAGE_DETAIL_SCREEN } from '../../../constants/strings/screenNames';
 import { styles } from './styles';
 
-const avatar = require('../../../assets/images/chatScreens/avatar1.png');
 const msgSentIcon = require('../../../assets/images/chatScreens/chatMessageSent.png');
 const msgSeenIcon = require('../../../assets/images/chatScreens/chatMessageSeen.png');
 const msgErrorIcon = require('../../../assets/images/chatScreens/chatMessageError.png');
 
 const ChatMessageItem = (props) => {
   const {
-    id, name, body, time, status,
+    id, name, avatar, lastMsg, time, status,
   } = props.item;
   let icon = null;
   let iconSize = null;
@@ -42,7 +41,12 @@ const ChatMessageItem = (props) => {
 
   const renderLeftContainer = () => (
     <View style={styles.leftContainer}>
-      <Image style={styles.avatar} source={avatar} />
+      <Image
+        style={styles.avatar}
+        source={{
+          uri: avatar,
+        }}
+      />
       <View style={styles.innerContainer}>
         <Text style={styles.name}>{name}</Text>
         <View style={styles.bodyContainer}>
@@ -55,7 +59,7 @@ const ChatMessageItem = (props) => {
               },
             ]}
           >
-            {body}
+            {lastMsg}
           </Text>
         </View>
       </View>
@@ -97,7 +101,8 @@ ChatMessageItem.propTypes = {
   item: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    body: PropTypes.string.isRequired,
+    avatar: PropTypes.string.isRequired,
+    lastMsg: PropTypes.string.isRequired,
     time: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,
   }).isRequired,

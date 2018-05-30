@@ -5,16 +5,17 @@ import { withNavigation } from 'react-navigation';
 import MyButton from '../../common/MyButton';
 import { styles } from './styles';
 
-const avatar = require('../../../assets/images/chatScreens/avatar1.png');
 const chatRequestAcceptIcon = require('../../../assets/images/chatScreens/chatRequestAcceptIcon.png');
 const chatRequestDeclineIcon = require('../../../assets/images/chatScreens/chatRequestDeclineIcon.png');
 
 const ChatRequestItem = (props) => {
-  const { id, name, requestTime } = props.item;
+  const {
+    id, avatar, name, requestTime,
+  } = props.item;
 
   const renderLeftContainer = () => (
     <View style={styles.leftContainer}>
-      <Image style={styles.avatar} source={avatar} />
+      <Image style={styles.avatar} source={{ uri: avatar }} />
     </View>
   );
 
@@ -86,6 +87,7 @@ const ChatRequestItem = (props) => {
 ChatRequestItem.propTypes = {
   item: PropTypes.shape({
     id: PropTypes.string.isRequired,
+    avatar: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     requestTime: PropTypes.string.isRequired,
   }).isRequired,

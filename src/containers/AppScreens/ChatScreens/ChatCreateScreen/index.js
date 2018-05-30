@@ -8,7 +8,7 @@ import SearchBox from '../../../../components/common/SearchBox';
 import Header from '../../../../components/common/Header';
 import LoadingSpinner from '../../../../components/LoadingSpinner';
 import { styles } from './styles';
-import { requestFetchUser } from '../../../../actions/fetchUsersActions';
+import { requestFetchUser } from '../../../../actions/userActions';
 import { firestore } from '../../../../utilities/configFirebase';
 import chatIdCreator from '../../../../helpers/chatIdCreator';
 import { CHAT_MESSAGE_DETAIL_SCREEN } from '../../../../constants/strings/screenNames';

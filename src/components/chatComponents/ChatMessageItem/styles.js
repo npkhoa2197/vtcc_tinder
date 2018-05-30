@@ -25,6 +25,7 @@ export const styles = StyleSheet.create({
   avatar: {
     width: 35,
     height: 35,
+    borderRadius: 14,
   },
   name: {
     fontSize: 16,

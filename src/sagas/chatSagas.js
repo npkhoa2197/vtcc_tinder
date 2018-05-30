@@ -8,36 +8,38 @@ import {
   ACTIVE_MESSAGE_REMOVE,
   FETCH_ACTIVE_MESSAGE_REQUEST,
   STOP_FETCH_ACTIVE_MESSAGE_REQUEST,
+  FETCH_CHAT_REQUEST,
+  CHAT_REQUEST_ADDED,
+  CHAT_REQUEST_CHANGED,
+  CHAT_REQUEST_REMOVED,
+  STOP_FETCH_CHAT_REQUEST,
 } from '../constants/strings/actionTypes';
 
 function createFetchActiveMessageChannel() {
   return eventChannel((emit) => {
     const { uid } = firebase.auth().currentUser;
 
-    const usersRef = firestore
+    const activeChatsRef = firestore
       .collection('activeChats')
       .doc(uid)
       .collection('chats');
 
-    const unsubscribe = usersRef.onSnapshot((snapshots) => {
+    const unsubscribe = activeChatsRef.onSnapshot((snapshots) => {
       snapshots.docChanges().forEach((change) => {
         if (change.type === 'added') {
           emit({
             type: ACTIVE_MESSAGE_ADDED,
-
-            payload: { ...change.doc.data(), id: change.doc.key },
+            payload: { ...change.doc.data(), id: change.doc.id },
           });
         } else if (change.type === 'modified') {
           emit({
             type: ACTIVE_MESSAGE_CHANGED,
-
-            payload: { ...change.doc.data(), id: change.doc.key },
+            payload: { ...change.doc.data(), id: change.doc.id },
           });
         } else if (change.type === 'removed') {
           emit({
             type: ACTIVE_MESSAGE_REMOVE,
-
-            payload: { ...change.doc.data(), id: change.doc.key },
+            payload: { ...change.doc.data(), id: change.doc.id },
           });
         }
       });
@@ -65,11 +67,8 @@ function* watchFetchActiveMessage() {
   const task = yield fork(watchFetchActiveMessageChannel);
 
   try {
-    while (true) {
-      yield take(STOP_FETCH_ACTIVE_MESSAGE_REQUEST);
-      yield cancel(task);
-      break;
-    }
+    yield take(STOP_FETCH_ACTIVE_MESSAGE_REQUEST);
+    yield cancel(task);
   } finally {
     yield cancel(task);
   }
@@ -77,4 +76,69 @@ function* watchFetchActiveMessage() {
 
 export function* watchFetchActiveMessageRequest() {
   yield takeEvery(FETCH_ACTIVE_MESSAGE_REQUEST, watchFetchActiveMessage);
+}
+
+// ------------------------------------------
+
+function createFetchChatRequestChannel() {
+  return eventChannel((emit) => {
+    const { uid } = firebase.auth().currentUser;
+
+    const chatRequestsRef = firestore
+      .collection('pendingChats')
+      .doc(uid)
+      .collection('chats');
+
+    const unsubscribe = chatRequestsRef.onSnapshot((snapshots) => {
+      snapshots.docChanges().forEach((change) => {
+        if (change.type === 'added') {
+          emit({
+            type: CHAT_REQUEST_ADDED,
+            payload: { ...change.doc.data(), id: change.doc.id },
+          });
+        } else if (change.type === 'modified') {
+          emit({
+            type: CHAT_REQUEST_CHANGED,
+            payload: { ...change.doc.data(), id: change.doc.id },
+          });
+        } else if (change.type === 'removed') {
+          emit({
+            type: CHAT_REQUEST_REMOVED,
+            payload: { ...change.doc.data(), id: change.doc.id },
+          });
+        }
+      });
+    });
+
+    return unsubscribe;
+  });
+}
+
+function* watchFetchChatRequestChannel() {
+  const fetchChatRequestChannel = yield call(createFetchChatRequestChannel);
+  try {
+    while (true) {
+      const action = yield take(fetchChatRequestChannel);
+      yield put(action);
+    }
+  } finally {
+    if (yield cancelled()) {
+      fetchChatRequestChannel.close();
+    }
+  }
+}
+
+function* watchFetchChatRequest() {
+  const task = yield fork(watchFetchChatRequestChannel);
+
+  try {
+    yield take(STOP_FETCH_CHAT_REQUEST);
+    yield cancel(task);
+  } finally {
+    yield cancel(task);
+  }
+}
+
+export function* watchFetchChatRequestRequest() {
+  yield takeEvery(FETCH_CHAT_REQUEST, watchFetchChatRequest);
 }
