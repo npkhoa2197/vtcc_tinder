@@ -19,7 +19,6 @@ class ChatMessageDetailItem extends React.PureComponent {
   static propTypes = {
     item: PropTypes.shape({
       id: PropTypes.string.isRequired,
-      avatar: PropTypes.string.isRequired,
       body: PropTypes.string.isRequired,
       timestamp: PropTypes.shape({
         seconds: PropTypes.number.isRequired,
@@ -27,6 +26,7 @@ class ChatMessageDetailItem extends React.PureComponent {
       seen: PropTypes.bool.isRequired,
       senderid: PropTypes.string.isRequired,
     }).isRequired,
+    avatar: PropTypes.string.isRequired,
     requestCheckSeenMessage: PropTypes.func.isRequired,
     chatDocId: PropTypes.string.isRequired,
     onLongPress: PropTypes.func.isRequired,
@@ -47,8 +47,9 @@ class ChatMessageDetailItem extends React.PureComponent {
 
   render() {
     const {
-      body, avatar, timestamp, senderid, seen,
+      body, timestamp, senderid, seen,
     } = this.props.item;
+    const { avatar } = this.props;
 
     const time = Date.now();
 

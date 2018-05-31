@@ -87,6 +87,7 @@ const ChatMessageItem = (props) => {
         props.navigation.navigate(CHAT_MESSAGE_DETAIL_SCREEN, {
           chatFriendName: name,
           chatDocId: id,
+          chatFriendAvatar: avatar,
         });
       }}
     >

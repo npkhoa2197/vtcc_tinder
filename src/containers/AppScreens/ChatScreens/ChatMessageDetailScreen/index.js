@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import firebase from 'firebase';
 import ChatMessageDetailItem from '../../../../components/chatComponents/ChatMessageDetailItem';
 import OptionItem from '../../../../components/common/OptionItem';
 import Header from '../../../../components/common/Header';
@@ -17,6 +18,7 @@ import { styles } from './styles';
 import {
   requestFetchChatMessage,
   stopRequestFetchChatMessage,
+  requestSendMessage,
 } from '../../../../actions/chatActions';
 
 const deleteIcon = require('../../../../assets/images/chatScreens/chatMessageDetailOptionItemDeleteMessageIcon.png');
@@ -37,6 +39,7 @@ class ChatMessageDetailScreen extends React.PureComponent {
     })).isRequired,
     requestChatMessages: PropTypes.func.isRequired,
     stopRequestChatMessages: PropTypes.func.isRequired,
+    requestSendMessage: PropTypes.func.isRequired,
     navigation: PropTypes.shape({
       goBack: PropTypes.func.isRequired,
       getParam: PropTypes.func.isRequired,
@@ -44,6 +47,11 @@ class ChatMessageDetailScreen extends React.PureComponent {
   };
   constructor(props) {
     super(props);
+
+    this.chatFriendName = this.props.navigation.getParam('chatFriendName');
+    this.chatFriendAvatar = this.props.navigation.getParam('chatFriendAvatar');
+    this.chatDocId = this.props.navigation.getParam('chatDocId');
+    this.currentUid = firebase.auth().currentUser.uid;
 
     this.state = {
       modalMessageOptionVisible: false,
@@ -73,18 +81,20 @@ class ChatMessageDetailScreen extends React.PureComponent {
     this.setState({ ...this.state, modalMainOptionVisible: false });
   };
 
+  handleSendButtonPress = () => {
+    this.props.requestSendMessage(this.chatDocId, this.currentUid, this.message);
+  };
+
   keyExtractor = item => item.id;
 
-  renderItem = (item) => {
-    console.log(item);
-    return (
-      <ChatMessageDetailItem
-        item={item}
-        chatDocId={this.chatDocId}
-        onLongPress={this.onLongPress}
-      />
-    );
-  };
+  renderItem = item => (
+    <ChatMessageDetailItem
+      item={item}
+      chatDocId={this.chatDocId}
+      avatar={this.avatar}
+      onLongPress={this.onLongPress}
+    />
+  );
 
   renderList = messages => (
     <FlatList
@@ -102,9 +112,14 @@ class ChatMessageDetailScreen extends React.PureComponent {
           style={styles.textInput}
           placeholder="Nhập nội dung chat"
           placeholderTextColor="rgb(174, 180, 187)"
+          onChangeText={(message) => {
+            this.message = message;
+          }}
         />
       </View>
-      <Image style={styles.icon} source={sendButtonIcon} />
+      <TouchableWithoutFeedback onPress={this.handleSendButtonPress}>
+        <Image style={styles.icon} source={sendButtonIcon} />
+      </TouchableWithoutFeedback>
     </View>
   );
 
@@ -141,14 +156,12 @@ class ChatMessageDetailScreen extends React.PureComponent {
   );
 
   render() {
-    const chatFriendName = this.props.navigation.getParam('chatFriendName');
-    this.chatDocId = this.props.navigation.getParam('chatDocId');
     const { messages } = this.props;
     return (
       <View style={styles.container}>
         <StatusBar translucent backgroundColor="transparent" />
         <Header
-          headerText={chatFriendName}
+          headerText={this.chatFriendName}
           isBack
           onBackPress={() => this.props.navigation.goBack()}
           haveRightButton
@@ -171,6 +184,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   requestChatMessages: chatDocId => dispatch(requestFetchChatMessage(chatDocId)),
   stopRequestChatMessages: () => dispatch(stopRequestFetchChatMessage()),
+  requestSendMessage: (chatDocId, senderid, body, timestamp) =>
+    dispatch(requestSendMessage(chatDocId, senderid, body, timestamp)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatMessageDetailScreen);

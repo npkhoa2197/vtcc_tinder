@@ -7,6 +7,7 @@ import {
   watchCreateNewChatThreadRequest,
   watchFetchChatMessageRequest,
   watchCheckSeenMessageRequest,
+  watchSendMessageRequest,
 } from './chatSagas';
 
 export default function* rootSaga() {
@@ -20,5 +21,6 @@ export default function* rootSaga() {
     watchCreateNewChatThreadRequest(),
     watchFetchChatMessageRequest(),
     watchCheckSeenMessageRequest(),
+    watchSendMessageRequest(),
   ]);
 }

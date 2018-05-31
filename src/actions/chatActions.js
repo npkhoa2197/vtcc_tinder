@@ -5,6 +5,7 @@ import {
   FETCH_CHAT_MESSAGE_REQUEST,
   STOP_FETCH_CHAT_MESSAGE_REQUEST,
   CHECK_SEEN_MESSAGE_REQUEST,
+  SEND_MESSAGE_REQUEST,
 } from '../constants/strings/actionTypes';
 
 export const requestFetchActiveMessage = () => ({
@@ -37,5 +38,14 @@ export const requestCheckSeenMessage = (chatDocId, messageId) => ({
   payload: {
     chatDocId,
     messageId,
+  },
+});
+
+export const requestSendMessage = (chatDocId, senderid, body) => ({
+  type: SEND_MESSAGE_REQUEST,
+  payload: {
+    chatDocId,
+    senderid,
+    body,
   },
 });

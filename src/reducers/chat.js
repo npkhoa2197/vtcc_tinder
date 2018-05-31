@@ -11,6 +11,7 @@ import {
   CHAT_MESSAGE_ADDED,
   CHAT_MESSAGE_REMOVED,
   CHECK_SEEN_MESSAGE_SUCCESS,
+  CHAT_MESSAGE_CHANGED,
 } from '../constants/strings/actionTypes';
 
 const chat = (
@@ -75,6 +76,19 @@ const chat = (
       return {
         ...state,
         chats: { ...state.chats, messages: [...state.chats.messages, action.payload] },
+      };
+    case CHAT_MESSAGE_CHANGED:
+      return {
+        ...state,
+        chats: {
+          ...state.chats,
+          messages: state.chats.messages.map((message) => {
+            if (message.id === action.payload.id) {
+              return { ...message, ...action.payload };
+            }
+            return message;
+          }),
+        },
       };
     case CHAT_MESSAGE_REMOVED:
       return {

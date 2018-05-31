@@ -3,7 +3,6 @@ import { View, Text, SectionList } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ChatMessageItem from '../../../../components/chatComponents/ChatMessageItem';
-import { mockDataChatRequest } from '../../../../constants/mockData';
 import ChatRequestItem from '../../../../components/chatComponents/ChatRequestItem';
 import {
   CHAT_MESSAGE_SCREEN_SECTIONLIST_REQUESTCHAT,

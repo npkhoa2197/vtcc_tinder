@@ -31,6 +31,10 @@ import {
   FETCH_CHAT_MESSAGE_REQUEST,
   CHECK_SEEN_MESSAGE_REQUEST,
   CHECK_SEEN_MESSAGE_SUCCESS,
+  CHAT_MESSAGE_CHANGED,
+  SEND_MESSAGE_SUCCESS,
+  SEND_MESSAGE_FAIL,
+  SEND_MESSAGE_REQUEST,
 } from '../constants/strings/actionTypes';
 import chatIdCreator from '../helpers/chatIdCreator';
 
@@ -178,6 +182,11 @@ function fetchChatMessageChannel(chatDocId) {
             type: CHAT_MESSAGE_ADDED,
             payload: { ...change.doc.data(), id: change.doc.id },
           });
+        } else if (change.type === 'modified') {
+          emit({
+            type: CHAT_MESSAGE_CHANGED,
+            payload: { ...change.doc.data(), id: change.doc.id },
+          });
         } else if (change.type === 'removed') {
           emit({
             type: CHAT_MESSAGE_REMOVED,
@@ -273,4 +282,31 @@ function* checkSeenMessage({ payload }) {
 
 export function* watchCheckSeenMessageRequest() {
   yield takeEvery(CHECK_SEEN_MESSAGE_REQUEST, checkSeenMessage);
+}
+
+// -------------------------------------------
+
+function* sendMessage({ payload }) {
+  const { chatDocId, senderid, body } = payload;
+  const chatRef = firestore
+    .collection('chats')
+    .doc(chatDocId)
+    .collection('messages');
+
+  try {
+    yield call([chatRef, chatRef.add], {
+      senderid,
+      body,
+      seen: false,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+    yield put({ type: SEND_MESSAGE_SUCCESS });
+  } catch (e) {
+    console.log(e.message);
+    yield put({ type: SEND_MESSAGE_FAIL, payload: e.message });
+  }
+}
+
+export function* watchSendMessageRequest() {
+  yield takeEvery(SEND_MESSAGE_REQUEST, sendMessage);
 }
