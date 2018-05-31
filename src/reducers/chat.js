@@ -6,12 +6,21 @@ import {
   CHAT_REQUEST_REMOVED,
   ACTIVE_MESSAGE_CHANGED,
   ACTIVE_MESSAGE_REMOVED,
+  INIT_CHAT_THREAD_SUCCESS,
+  INIT_CHAT_THREAD_FAIL,
+  CHAT_MESSAGE_ADDED,
+  CHAT_MESSAGE_REMOVED,
+  CHECK_SEEN_MESSAGE_SUCCESS,
 } from '../constants/strings/actionTypes';
 
 const chat = (
   state = {
     activeChats: [],
     pendingChats: [],
+    chats: {
+      messages: [],
+      isThreadCreated: false,
+    },
   },
   action,
 ) => {
@@ -51,6 +60,42 @@ const chat = (
       return {
         ...state,
         pendingChats: state.pendingChats.filter(pendingChat => pendingChat.id !== action.payload.id),
+      };
+    case INIT_CHAT_THREAD_SUCCESS:
+      return {
+        ...state,
+        chats: { ...state.chats, isThreadCreated: true },
+      };
+    case INIT_CHAT_THREAD_FAIL:
+      return {
+        ...state,
+        chats: { ...state.chats, isThreadCreated: false },
+      };
+    case CHAT_MESSAGE_ADDED:
+      return {
+        ...state,
+        chats: { ...state.chats, messages: [...state.chats.messages, action.payload] },
+      };
+    case CHAT_MESSAGE_REMOVED:
+      return {
+        ...state,
+        chats: {
+          ...state.chats,
+          messages: state.chats.messages.filter(message => message.id !== action.payload.id),
+        },
+      };
+    case CHECK_SEEN_MESSAGE_SUCCESS:
+      return {
+        ...state,
+        chats: {
+          ...state.chats,
+          messages: state.chats.messages.map((message) => {
+            if (message.id === action.payload) {
+              return { ...message, seen: true };
+            }
+            return message;
+          }),
+        },
       };
     default:
       return state;

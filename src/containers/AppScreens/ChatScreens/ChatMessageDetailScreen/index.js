@@ -9,11 +9,15 @@ import {
   Image,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import { mockDataChatMessageDetail } from '../../../../constants/mockData';
+import { connect } from 'react-redux';
 import ChatMessageDetailItem from '../../../../components/chatComponents/ChatMessageDetailItem';
 import OptionItem from '../../../../components/common/OptionItem';
 import Header from '../../../../components/common/Header';
 import { styles } from './styles';
+import {
+  requestFetchChatMessage,
+  stopRequestFetchChatMessage,
+} from '../../../../actions/chatActions';
 
 const deleteIcon = require('../../../../assets/images/chatScreens/chatMessageDetailOptionItemDeleteMessageIcon.png');
 const copyIcon = require('../../../../assets/images/chatScreens/chatMessageDetailOptionItemCopyMessageIcon.png');
@@ -26,6 +30,13 @@ const sendButtonIcon = require('../../../../assets/images/chatScreens/sendButton
 
 class ChatMessageDetailScreen extends React.PureComponent {
   static propTypes = {
+    messages: PropTypes.arrayOf(PropTypes.shape({
+      senderid: PropTypes.string.isRequired,
+      body: PropTypes.string.isRequired,
+      seen: PropTypes.bool.isRequired,
+    })).isRequired,
+    requestChatMessages: PropTypes.func.isRequired,
+    stopRequestChatMessages: PropTypes.func.isRequired,
     navigation: PropTypes.shape({
       goBack: PropTypes.func.isRequired,
       getParam: PropTypes.func.isRequired,
@@ -38,6 +49,12 @@ class ChatMessageDetailScreen extends React.PureComponent {
       modalMessageOptionVisible: false,
       modalMainOptionVisible: false,
     };
+  }
+
+  componentDidMount() {
+    if (this.props.messages.length === 0) {
+      this.props.requestChatMessages(this.chatDocId);
+    }
   }
 
   onLongPress = () => {
@@ -58,11 +75,20 @@ class ChatMessageDetailScreen extends React.PureComponent {
 
   keyExtractor = item => item.id;
 
-  renderItem = item => <ChatMessageDetailItem item={item} onLongPress={this.onLongPress} />;
+  renderItem = (item) => {
+    console.log(item);
+    return (
+      <ChatMessageDetailItem
+        item={item}
+        chatDocId={this.chatDocId}
+        onLongPress={this.onLongPress}
+      />
+    );
+  };
 
-  renderList = () => (
+  renderList = messages => (
     <FlatList
-      data={mockDataChatMessageDetail}
+      data={messages}
       keyExtractor={this.keyExtractor}
       renderItem={({ item }) => this.renderItem(item)}
       ListHeaderComponent={() => <View style={{ height: 16 }} />}
@@ -115,19 +141,21 @@ class ChatMessageDetailScreen extends React.PureComponent {
   );
 
   render() {
-    const name = this.props.navigation.getParam('chatFriendName');
+    const chatFriendName = this.props.navigation.getParam('chatFriendName');
+    this.chatDocId = this.props.navigation.getParam('chatDocId');
+    const { messages } = this.props;
     return (
       <View style={styles.container}>
         <StatusBar translucent backgroundColor="transparent" />
         <Header
-          headerText={name}
+          headerText={chatFriendName}
           isBack
           onBackPress={() => this.props.navigation.goBack()}
           haveRightButton
           rightButtonIcon={rightButtonIcon}
           onRightButtonPress={this.onRightButtonHeaderPress}
         />
-        {this.renderList()}
+        {this.renderList(messages)}
         {this.renderInputField()}
         {this.renderModalMessageOption()}
         {this.renderModalMainOption()}
@@ -136,4 +164,13 @@ class ChatMessageDetailScreen extends React.PureComponent {
   }
 }
 
-export default ChatMessageDetailScreen;
+const mapStateToProps = state => ({
+  messages: state.chat.chats.messages,
+});
+
+const mapDispatchToProps = dispatch => ({
+  requestChatMessages: chatDocId => dispatch(requestFetchChatMessage(chatDocId)),
+  stopRequestChatMessages: () => dispatch(stopRequestFetchChatMessage()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChatMessageDetailScreen);

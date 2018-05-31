@@ -19,7 +19,9 @@ class ProfileScreen extends React.PureComponent {
 
   componentDidUpdate() {
     const { isLoggedIn } = this.props;
+    console.log(isLoggedIn);
     if (!isLoggedIn) {
+      console.log('navigating to loginscreen');
       this.props.navigation.navigate(LOGIN_SCREEN);
     }
   }

@@ -9,13 +9,13 @@ import Header from '../../../../components/common/Header';
 import LoadingSpinner from '../../../../components/LoadingSpinner';
 import { styles } from './styles';
 import { requestFetchUser } from '../../../../actions/userActions';
-import { firestore } from '../../../../utilities/configFirebase';
-import chatIdCreator from '../../../../helpers/chatIdCreator';
 import { CHAT_MESSAGE_DETAIL_SCREEN } from '../../../../constants/strings/screenNames';
+import { requestCreateNewChatThread } from '../../../../actions/chatActions';
 
 class ChatCreateScreen extends React.PureComponent {
   static propTypes = {
     isFetchingUsers: PropTypes.bool.isRequired,
+    isThreadCreated: PropTypes.bool.isRequired,
     sections: PropTypes.arrayOf(PropTypes.shape({
       title: PropTypes.string.isRequired,
       data: PropTypes.arrayOf(PropTypes.shape({
@@ -26,6 +26,7 @@ class ChatCreateScreen extends React.PureComponent {
       })).isRequired,
     })).isRequired,
     requestFetchUsers: PropTypes.func.isRequired,
+    requestCreateNewChatThread: PropTypes.func.isRequired,
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
       goBack: PropTypes.func.isRequired,
@@ -36,34 +37,28 @@ class ChatCreateScreen extends React.PureComponent {
     this.props.requestFetchUsers();
   }
 
-  handleContactItemPress = (contactId) => {
+  componentDidUpdate() {
+    const { isThreadCreated } = this.props;
+    if (isThreadCreated) {
+      this.props.navigation.navigate(CHAT_MESSAGE_DETAIL_SCREEN, {
+        chatFriendName: this.contactName,
+      });
+    }
+  }
+
+  handleContactItemPress = (contactId, contactName) => {
     const { uid } = firebase.auth().currentUser;
-    const docId = chatIdCreator(uid, contactId);
-
-    firestore
-      .collection('chats')
-      .doc(docId)
-      .set({
-        participants: {
-          [uid]: true,
-        },
-      });
-
-    firestore
-      .collection('users')
-      .doc(contactId)
-      .get()
-      .then((doc) => {
-        this.props.navigation.navigate(CHAT_MESSAGE_DETAIL_SCREEN, {
-          chatFriendName: doc.data().name,
-        });
-      });
+    this.contactName = contactName;
+    this.props.requestCreateNewChatThread(uid, contactId);
   };
 
   keyExtractor = item => item.id;
 
   renderItem = item => (
-    <TouchableOpacity activeOpacity={0.6} onPress={() => this.handleContactItemPress(item.id)}>
+    <TouchableOpacity
+      activeOpacity={0.6}
+      onPress={() => this.handleContactItemPress(item.id, item.name)}
+    >
       <ChatCreateContactItem item={item} />
     </TouchableOpacity>
   );
@@ -121,7 +116,7 @@ const createSections = (users) => {
       const res = sections.find(section => section.title === user.name[0]);
       if (res) {
         res.data.push(user);
-      } else sections.push({ title: user.name[0], data: [{ ...user }] });
+      } else sections.push({ title: user.name[0].toUpperCase(), data: [{ ...user }] });
     }
   });
 
@@ -131,10 +126,12 @@ const createSections = (users) => {
 const mapStateToProps = state => ({
   isFetchingUsers: state.users.isFetchingUsers,
   sections: createSections(state.users.users),
+  isThreadCreated: state.chat.chats.isThreadCreated,
 });
 
 const mapDispatchToProps = dispatch => ({
   requestFetchUsers: () => dispatch(requestFetchUser()),
+  requestCreateNewChatThread: (uid1, uid2) => dispatch(requestCreateNewChatThread(uid1, uid2)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatCreateScreen);
