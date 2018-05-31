@@ -65,6 +65,10 @@ class ChatMessageDetailScreen extends React.PureComponent {
     }
   }
 
+  componentDidUpdate() {
+    this.messageListRef.scrollToEnd();
+  }
+
   onLongPress = () => {
     this.setState({ ...this.state, modalMessageOptionVisible: true });
   };
@@ -82,6 +86,8 @@ class ChatMessageDetailScreen extends React.PureComponent {
   };
 
   handleSendButtonPress = () => {
+    this.textInputRef.clear();
+    // this.messageListRef.scrollToEnd();
     this.props.requestSendMessage(this.chatDocId, this.currentUid, this.message);
   };
 
@@ -91,7 +97,7 @@ class ChatMessageDetailScreen extends React.PureComponent {
     <ChatMessageDetailItem
       item={item}
       chatDocId={this.chatDocId}
-      avatar={this.avatar}
+      avatar={this.chatFriendAvatar}
       onLongPress={this.onLongPress}
     />
   );
@@ -102,6 +108,11 @@ class ChatMessageDetailScreen extends React.PureComponent {
       keyExtractor={this.keyExtractor}
       renderItem={({ item }) => this.renderItem(item)}
       ListHeaderComponent={() => <View style={{ height: 16 }} />}
+      ref={(ref) => {
+        this.messageListRef = ref;
+      }}
+      onContentSizeChange={() => this.messageListRef.scrollToEnd({ animated: true })}
+      onLayout={() => this.messageListRef.scrollToEnd({ animated: true })}
     />
   );
 
@@ -114,6 +125,9 @@ class ChatMessageDetailScreen extends React.PureComponent {
           placeholderTextColor="rgb(174, 180, 187)"
           onChangeText={(message) => {
             this.message = message;
+          }}
+          ref={(ref) => {
+            this.textInputRef = ref;
           }}
         />
       </View>

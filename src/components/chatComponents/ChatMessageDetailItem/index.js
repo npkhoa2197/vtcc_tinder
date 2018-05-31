@@ -20,9 +20,6 @@ class ChatMessageDetailItem extends React.PureComponent {
     item: PropTypes.shape({
       id: PropTypes.string.isRequired,
       body: PropTypes.string.isRequired,
-      timestamp: PropTypes.shape({
-        seconds: PropTypes.number.isRequired,
-      }).isRequired,
       seen: PropTypes.bool.isRequired,
       senderid: PropTypes.string.isRequired,
     }).isRequired,
