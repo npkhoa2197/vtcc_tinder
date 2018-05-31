@@ -5,7 +5,7 @@ import { firestore } from '../utilities/configFirebase';
 import {
   ACTIVE_MESSAGE_ADDED,
   ACTIVE_MESSAGE_CHANGED,
-  ACTIVE_MESSAGE_REMOVE,
+  ACTIVE_MESSAGE_REMOVED,
   FETCH_ACTIVE_MESSAGE_REQUEST,
   STOP_FETCH_ACTIVE_MESSAGE_REQUEST,
   FETCH_CHAT_REQUEST,
@@ -38,7 +38,7 @@ function createFetchActiveMessageChannel() {
           });
         } else if (change.type === 'removed') {
           emit({
-            type: ACTIVE_MESSAGE_REMOVE,
+            type: ACTIVE_MESSAGE_REMOVED,
             payload: { ...change.doc.data(), id: change.doc.id },
           });
         }
