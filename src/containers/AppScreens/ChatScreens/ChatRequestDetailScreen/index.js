@@ -7,7 +7,6 @@ import Header from '../../../../components/common/Header';
 import { styles } from './styles';
 
 const optionIcon = require('../../../../assets/images/chatScreens/chatMessageDetailOptionItemDefaultIcon.png');
-const avatar = require('../../../../assets/images/chatScreens/avatar2.png');
 const followIcon = require('../../../../assets/images/chatScreens/chatRequestDetailFollowIcon.png');
 const chatRequestAcceptIcon = require('../../../../assets/images/chatScreens/chatRequestAcceptIcon.png');
 const chatRequestDeclineIcon = require('../../../../assets/images/chatScreens/chatRequestDeclineIcon.png');
