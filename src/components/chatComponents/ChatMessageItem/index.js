@@ -20,6 +20,27 @@ const ChatMessageItem = (props) => {
   const {
     id, name, avatar, lastMsg, timestamp, status,
   } = props.item;
+  //   if (status === '') {
+  //     const { uid } = firebase.auth().currentUser;
+  //     const uids = id.split('-');
+  //     const otherId = uid === uids[0] ? uids[1] : uids[0];
+  //     const chatDocId = chatIdCreator(uid, otherId);
+
+  //     firestore
+  //       .collection('activeChats')
+  //       .doc(otherId)
+  //       .collection('chats')
+  //       .doc(chatDocId)
+  //       .get()
+  //       .then((doc) => {
+  //         const currentStatus = doc.data().status;
+  //         if (currentStatus === MESSAGE_STATUS_SENT) {
+  //           console.log('here');
+  //           this.messageStatus = MESSAGE_STATUS_PENDING;
+  //         }
+  //       });
+  //   }
+
   let icon = null;
   let iconSize = null;
   switch (status) {
@@ -56,7 +77,10 @@ const ChatMessageItem = (props) => {
             style={[
               styles.body,
               {
-                color: status === MESSAGE_STATUS_PENDING ? 'rgb(48, 49, 55)' : 'rgb(137, 139, 155)',
+                color:
+                status === MESSAGE_STATUS_PENDING
+                    ? 'rgb(48, 49, 55)'
+                    : 'rgb(137, 139, 155)',
               },
             ]}
           >
@@ -73,7 +97,10 @@ const ChatMessageItem = (props) => {
         style={[
           styles.time,
           {
-            color: status === MESSAGE_STATUS_PENDING ? 'rgb(48, 49, 55)' : 'rgb(137, 139, 155)',
+            color:
+              status === MESSAGE_STATUS_PENDING
+                ? 'rgb(48, 49, 55)'
+                : 'rgb(137, 139, 155)',
           },
         ]}
       >

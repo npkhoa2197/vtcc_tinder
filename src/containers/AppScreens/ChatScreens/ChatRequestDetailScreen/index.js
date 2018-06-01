@@ -15,14 +15,24 @@ const chatRequestDeclineIcon = require('../../../../assets/images/chatScreens/ch
 class ChatRequestDetailScreen extends React.PureComponent {
   static propTypes = {
     navigation: PropTypes.shape({
+      getParam: PropTypes.func.isRequired,
       goBack: PropTypes.func.isRequired,
     }).isRequired,
   };
 
+  constructor(props) {
+    super(props);
+    this.name = this.props.navigation.getParam('requestName');
+    this.avatar = this.props.navigation.getParam('requestAvatar');
+    if (this.props.navigation.getParam('messageItem')) {
+      this.messageItem = this.props.navigation.getParam('messageItem');
+    } else this.messageItem = null;
+  }
+
   renderUpperContainer = () => (
     <View style={styles.upperContainer}>
       {this.renderHeaderInUpperContent()}
-      <Text style={styles.username}>Lê Bảo Hân</Text>
+      <Text style={styles.username}>{this.name}</Text>
       <Text style={styles.userDescription}>Chuyên gia sử học</Text>
       {this.renderFollowInfoInUpperContent()}
     </View>
@@ -30,7 +40,7 @@ class ChatRequestDetailScreen extends React.PureComponent {
 
   renderHeaderInUpperContent = () => (
     <View style={styles.headerContainer}>
-      <Image style={styles.avatar} source={avatar} />
+      <Image style={styles.avatar} source={{ uri: this.avatar }} />
       <MyButton
         icon={followIcon}
         iconWidth={17}
@@ -65,12 +75,7 @@ class ChatRequestDetailScreen extends React.PureComponent {
   renderLowerContainer = () => (
     <View style={styles.lowerContainer}>
       {this.renderNameAndTextInLowerContent()}
-      <ChatMessageDetailItem
-        item={{
-          body: 'Đây là thông điệp lúc request chat mà user Lê Bảo Hân đã nhập gửi tới người dùng.',
-          time: '09:12 am',
-        }}
-      />
+      <ChatMessageDetailItem item={this.messageItem} isCheckSeen={false} avatar={this.avatar} />
       <View style={styles.buttonContainer}>
         <MyButton
           text="Chấp nhận"
@@ -111,7 +116,7 @@ class ChatRequestDetailScreen extends React.PureComponent {
 
   renderNameAndTextInLowerContent = () => (
     <View style={styles.nameAndTextContainer}>
-      <Text style={styles.username2}>Lê Bảo Hân</Text>
+      <Text style={styles.username2}>{this.name}</Text>
       <Text style={styles.textRequest}> muốn được chat với bạn</Text>
     </View>
   );
@@ -119,7 +124,7 @@ class ChatRequestDetailScreen extends React.PureComponent {
     return (
       <View style={styles.container}>
         <Header
-          headerText="Lê Bảo Hân"
+          headerText={this.name}
           isBack
           onBackPress={() => this.props.navigation.goBack()}
           haveRightButton

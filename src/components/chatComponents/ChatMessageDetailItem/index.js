@@ -25,9 +25,16 @@ class ChatMessageDetailItem extends React.PureComponent {
       senderId: PropTypes.string.isRequired,
     }).isRequired,
     avatar: PropTypes.string.isRequired,
+    isCheckSeen: PropTypes.bool,
     requestCheckSeenMessage: PropTypes.func.isRequired,
-    chatDocId: PropTypes.string.isRequired,
-    onLongPress: PropTypes.func.isRequired,
+    chatDocId: PropTypes.string,
+    onLongPress: PropTypes.func,
+  };
+
+  static defaultProps = {
+    isCheckSeen: true,
+    onLongPress: () => {},
+    chatDocId: '',
   };
 
   constructor(props) {
@@ -38,68 +45,72 @@ class ChatMessageDetailItem extends React.PureComponent {
 
   componentDidMount() {
     const { senderId, seen, id } = this.props.item;
-    if (senderId !== this.currentUid && !seen) {
+    const { isCheckSeen } = this.props;
+    if (senderId !== this.currentUid && !seen && isCheckSeen) {
       this.props.requestCheckSeenMessage(this.props.chatDocId, id);
     }
   }
 
   render() {
-    const {
-      body, timestamp, senderId, seen,
-    } = this.props.item;
-    const { avatar } = this.props;
+    if (this.props.item) {
+      const {
+        body, timestamp, senderId, seen,
+      } = this.props.item;
+      const { avatar } = this.props;
 
-    if (senderId !== this.currentUid) {
-      const time = convertTimestamp(timestamp.seconds);
+      if (senderId !== this.currentUid) {
+        const time = convertTimestamp(timestamp.seconds);
+        return (
+          <TouchableOpacity onLongPress={() => this.props.onLongPress()}>
+            <View style={styles.container1}>
+              <View style={styles.leftContainer}>
+                <Image style={styles.avatar} source={{ uri: avatar }} />
+              </View>
+              <View style={styles.rightContainer}>
+                <View style={styles.messageContainer}>
+                  <Text style={styles.messageBody}>{body}</Text>
+                </View>
+                <Text style={styles.time}>{time}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        );
+      }
+
+      const iconSize = seen ? { width: 13.8, height: 7 } : { width: 9, height: 7 };
+      const icon = seen ? msgSeenIcon : msgSentIcon;
+      const statusMsg = seen ? 'Đã xem' : 'Đã nhận';
+
       return (
         <TouchableOpacity onLongPress={() => this.props.onLongPress()}>
-          <View style={styles.container1}>
-            <View style={styles.leftContainer}>
-              <Image style={styles.avatar} source={{ uri: avatar }} />
+          <View style={styles.container2}>
+            <View style={[styles.messageContainer, { backgroundColor: 'rgb(63, 81, 181)' }]}>
+              <Text style={[styles.messageBody, { color: '#FFF' }]}>{body}</Text>
             </View>
-            <View style={styles.rightContainer}>
-              <View style={styles.messageContainer}>
-                <Text style={styles.messageBody}>{body}</Text>
-              </View>
-              <Text style={styles.time}>{time}</Text>
+            <View style={styles.statusContainer}>
+              <Image style={[icon !== null ? styles.icon : {}, iconSize]} source={icon} />
+              <Text style={styles.status}>{statusMsg}</Text>
             </View>
           </View>
         </TouchableOpacity>
       );
+
+      //   return (
+      //     <TouchableOpacity onLongPress={() => props.onLongPress()}>
+      //       <View style={styles.container2}>
+      //         <View style={[styles.messageContainer, { backgroundColor: 'rgb(214, 218, 223)' }]}>
+      //           <Text style={[styles.messageBody, { color: '#FFF' }]}>{body}</Text>
+      //         </View>
+      //         <View style={styles.statusContainer}>
+      //           <Image style={[icon !== null ? styles.icon : {}, iconSize]} source={icon} />
+      //           <Text style={styles.status}>{statusMsg}</Text>
+      //           <Text style={styles.tryAgainText}>Thử lại</Text>
+      //         </View>
+      //       </View>
+      //     </TouchableOpacity>
+      //   );
     }
-
-    const iconSize = seen ? { width: 13.8, height: 7 } : { width: 9, height: 7 };
-    const icon = seen ? msgSeenIcon : msgSentIcon;
-    const statusMsg = seen ? 'Đã xem' : 'Đã nhận';
-
-    return (
-      <TouchableOpacity onLongPress={() => this.props.onLongPress()}>
-        <View style={styles.container2}>
-          <View style={[styles.messageContainer, { backgroundColor: 'rgb(63, 81, 181)' }]}>
-            <Text style={[styles.messageBody, { color: '#FFF' }]}>{body}</Text>
-          </View>
-          <View style={styles.statusContainer}>
-            <Image style={[icon !== null ? styles.icon : {}, iconSize]} source={icon} />
-            <Text style={styles.status}>{statusMsg}</Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-    );
-
-    //   return (
-    //     <TouchableOpacity onLongPress={() => props.onLongPress()}>
-    //       <View style={styles.container2}>
-    //         <View style={[styles.messageContainer, { backgroundColor: 'rgb(214, 218, 223)' }]}>
-    //           <Text style={[styles.messageBody, { color: '#FFF' }]}>{body}</Text>
-    //         </View>
-    //         <View style={styles.statusContainer}>
-    //           <Image style={[icon !== null ? styles.icon : {}, iconSize]} source={icon} />
-    //           <Text style={styles.status}>{statusMsg}</Text>
-    //           <Text style={styles.tryAgainText}>Thử lại</Text>
-    //         </View>
-    //       </View>
-    //     </TouchableOpacity>
-    //   );
+    return null;
   }
 }
 

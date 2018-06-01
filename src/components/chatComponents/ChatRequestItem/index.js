@@ -10,6 +10,7 @@ import { convertSeconds } from '../../../helpers/convertTime';
 import { requestCreateNewChatThread } from '../../../actions/chatActions';
 import { CHAT_MESSAGE_DETAIL_SCREEN } from '../../../constants/strings/screenNames';
 import chatIdCreator from '../../../helpers/chatIdCreator';
+import { firestore } from '../../../utilities/configFirebase';
 
 const chatRequestAcceptIcon = require('../../../assets/images/chatScreens/chatRequestAcceptIcon.png');
 const chatRequestDeclineIcon = require('../../../assets/images/chatScreens/chatRequestDeclineIcon.png');
@@ -44,6 +45,35 @@ class ChatRequestItem extends React.PureComponent {
   };
 
   handleDeclinePress = () => {};
+
+  handleRequestItemPress = () => {
+    const { id, name, avatar } = this.props.item;
+    firestore
+      .collection('chats')
+      .doc(id)
+      .collection('messages')
+      .orderBy('timestamp', 'desc')
+      .get()
+      .then((query) => {
+        if (query.docs.length > 0) {
+          const messageItem = { ...query.docs[0].data(), id: query.docs[0].id };
+          this.props.navigation.navigate('ChatRequestDetailScreen', {
+            requestName: name,
+            requestAvatar: avatar,
+            messageItem,
+          });
+        } else {
+          this.props.navigation.navigate('ChatRequestDetailScreen', {
+            requestName: name,
+            requestAvatar: avatar,
+            messageItem: null,
+          });
+        }
+      })
+      .catch((e) => {
+        console.log(e.message);
+      });
+  };
 
   renderInnerUpperContainer = () => {
     const { timestamp, name } = this.props.item;
@@ -114,7 +144,7 @@ class ChatRequestItem extends React.PureComponent {
 
   render() {
     return (
-      <TouchableOpacity onPress={() => this.props.navigation.navigate('ChatRequestDetailScreen')}>
+      <TouchableOpacity onPress={this.handleRequestItemPress}>
         <View style={styles.container}>
           {this.renderLeftContainer()}
           {this.renderRightContainer()}
