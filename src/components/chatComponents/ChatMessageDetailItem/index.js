@@ -10,6 +10,7 @@ import {
 } from '../../../constants/strings/strings';
 import { styles } from './styles';
 import { requestCheckSeenMessage } from '../../../actions/chatActions';
+import { convertTimestamp } from '../../../helpers/convertTime';
 
 const msgSentIcon = require('../../../assets/images/chatScreens/chatMessageSent.png');
 const msgSeenIcon = require('../../../assets/images/chatScreens/chatMessageSeen.png');
@@ -21,7 +22,7 @@ class ChatMessageDetailItem extends React.PureComponent {
       id: PropTypes.string.isRequired,
       body: PropTypes.string.isRequired,
       seen: PropTypes.bool.isRequired,
-      senderid: PropTypes.string.isRequired,
+      senderId: PropTypes.string.isRequired,
     }).isRequired,
     avatar: PropTypes.string.isRequired,
     requestCheckSeenMessage: PropTypes.func.isRequired,
@@ -36,21 +37,20 @@ class ChatMessageDetailItem extends React.PureComponent {
   }
 
   componentDidMount() {
-    const { senderid, seen, id } = this.props.item;
-    if (senderid !== this.currentUid && !seen) {
+    const { senderId, seen, id } = this.props.item;
+    if (senderId !== this.currentUid && !seen) {
       this.props.requestCheckSeenMessage(this.props.chatDocId, id);
     }
   }
 
   render() {
     const {
-      body, timestamp, senderid, seen,
+      body, timestamp, senderId, seen,
     } = this.props.item;
     const { avatar } = this.props;
 
-    const time = Date.now();
-
-    if (senderid !== this.currentUid) {
+    if (senderId !== this.currentUid) {
+      const time = convertTimestamp(timestamp.seconds);
       return (
         <TouchableOpacity onLongPress={() => this.props.onLongPress()}>
           <View style={styles.container1}>

@@ -10,6 +10,7 @@ import {
 } from '../../../constants/strings/strings';
 import { CHAT_MESSAGE_DETAIL_SCREEN } from '../../../constants/strings/screenNames';
 import { styles } from './styles';
+import { convertSeconds } from '../../../helpers/convertTime';
 
 const msgSentIcon = require('../../../assets/images/chatScreens/chatMessageSent.png');
 const msgSeenIcon = require('../../../assets/images/chatScreens/chatMessageSeen.png');
@@ -17,7 +18,7 @@ const msgErrorIcon = require('../../../assets/images/chatScreens/chatMessageErro
 
 const ChatMessageItem = (props) => {
   const {
-    id, name, avatar, lastMsg, time, status,
+    id, name, avatar, lastMsg, timestamp, status,
   } = props.item;
   let icon = null;
   let iconSize = null;
@@ -66,7 +67,7 @@ const ChatMessageItem = (props) => {
     </View>
   );
 
-  const renderRightContainer = () => (
+  const renderRightContainer = time => (
     <View>
       <Text
         style={[
@@ -81,22 +82,26 @@ const ChatMessageItem = (props) => {
     </View>
   );
 
-  return (
-    <TouchableOpacity
-      onPress={() => {
-        props.navigation.navigate(CHAT_MESSAGE_DETAIL_SCREEN, {
-          chatFriendName: name,
-          chatDocId: id,
-          chatFriendAvatar: avatar,
-        });
-      }}
-    >
-      <View style={styles.container}>
-        {renderLeftContainer()}
-        {renderRightContainer()}
-      </View>
-    </TouchableOpacity>
-  );
+  if (lastMsg !== '') {
+    const time = convertSeconds(Date.now() - timestamp.seconds * 1000);
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          props.navigation.navigate(CHAT_MESSAGE_DETAIL_SCREEN, {
+            chatFriendName: name,
+            chatDocId: id,
+            chatFriendAvatar: avatar,
+          });
+        }}
+      >
+        <View style={styles.container}>
+          {renderLeftContainer()}
+          {renderRightContainer(time)}
+        </View>
+      </TouchableOpacity>
+    );
+  }
+  return null;
 };
 
 ChatMessageItem.propTypes = {
@@ -105,7 +110,6 @@ ChatMessageItem.propTypes = {
     name: PropTypes.string.isRequired,
     avatar: PropTypes.string.isRequired,
     lastMsg: PropTypes.string.isRequired,
-    time: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,
   }).isRequired,
   navigation: PropTypes.shape({

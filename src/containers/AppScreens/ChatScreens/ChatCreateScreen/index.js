@@ -11,6 +11,7 @@ import { styles } from './styles';
 import { requestFetchUser } from '../../../../actions/userActions';
 import { CHAT_MESSAGE_DETAIL_SCREEN } from '../../../../constants/strings/screenNames';
 import { requestCreateNewChatThread } from '../../../../actions/chatActions';
+import chatIdCreator from '../../../../helpers/chatIdCreator';
 
 class ChatCreateScreen extends React.PureComponent {
   static propTypes = {
@@ -40,16 +41,19 @@ class ChatCreateScreen extends React.PureComponent {
   componentDidUpdate() {
     const { isThreadCreated } = this.props;
     if (isThreadCreated) {
+      const { uid } = firebase.auth().currentUser;
+      const chatDocId = chatIdCreator(uid, this.otherId);
       this.props.navigation.navigate(CHAT_MESSAGE_DETAIL_SCREEN, {
-        chatFriendName: this.contactName,
+        chatFriendName: this.otherName,
+        chatFriendAvatar: this.otherAvatar,
+        chatDocId,
       });
     }
   }
 
-  handleContactItemPress = (contactId, contactName) => {
+  handleContactItemPress = (otherId) => {
     const { uid } = firebase.auth().currentUser;
-    this.contactName = contactName;
-    this.props.requestCreateNewChatThread(uid, contactId);
+    this.props.requestCreateNewChatThread(uid, otherId);
   };
 
   keyExtractor = item => item.id;
@@ -57,7 +61,12 @@ class ChatCreateScreen extends React.PureComponent {
   renderItem = item => (
     <TouchableOpacity
       activeOpacity={0.6}
-      onPress={() => this.handleContactItemPress(item.id, item.name)}
+      onPress={() => {
+        this.otherId = item.id;
+        this.otherAvatar = item.avatar;
+        this.otherName = item.name;
+        this.handleContactItemPress(item.id, item.name);
+      }}
     >
       <ChatCreateContactItem item={item} />
     </TouchableOpacity>
@@ -94,8 +103,8 @@ class ChatCreateScreen extends React.PureComponent {
             backgroundColor: 'rgb(230, 230, 230)',
           }}
         />
-        <LoadingSpinner visible={isFetchingUsers} size="large" color="blue" />
         {this.renderList(sections)}
+        <LoadingSpinner visible={isFetchingUsers} size="large" color="blue" />
       </View>
     );
   }

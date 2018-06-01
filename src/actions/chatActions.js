@@ -41,11 +41,11 @@ export const requestCheckSeenMessage = (chatDocId, messageId) => ({
   },
 });
 
-export const requestSendMessage = (chatDocId, senderid, body) => ({
+export const requestSendMessage = (chatDocId, senderId, body) => ({
   type: SEND_MESSAGE_REQUEST,
   payload: {
     chatDocId,
-    senderid,
+    senderId,
     body,
   },
 });

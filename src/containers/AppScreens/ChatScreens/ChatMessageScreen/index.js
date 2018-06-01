@@ -19,14 +19,14 @@ class ChatMessageScreen extends React.PureComponent {
     activeChats: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
+      avatar: PropTypes.string.isRequired,
       lastMsg: PropTypes.string.isRequired,
       status: PropTypes.string.isRequired,
     })).isRequired,
     pendingChats: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
-      lastMsg: PropTypes.string.isRequired,
-      status: PropTypes.string.isRequired,
+      avatar: PropTypes.string.isRequired,
     })).isRequired,
     requestFetchActiveChat: PropTypes.func.isRequired,
     requestFetchChatRequest: PropTypes.func.isRequired,

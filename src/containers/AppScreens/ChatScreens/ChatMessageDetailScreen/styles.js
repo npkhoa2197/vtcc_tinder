@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
   textInputContainer: {
     flex: 1,
     borderWidth: 1,
-    alignItems: 'flex-start',
+    alignItems: 'stretch',
     borderColor: 'rgb(236, 238, 240)',
     borderRadius: 25,
     marginRight: 10,

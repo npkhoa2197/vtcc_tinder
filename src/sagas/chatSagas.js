@@ -173,7 +173,8 @@ function fetchChatMessageChannel(chatDocId) {
     const chatMessagesRef = firestore
       .collection('chats')
       .doc(chatDocId)
-      .collection('messages');
+      .collection('messages')
+      .orderBy('timestamp', 'desc');
 
     const unsubscribe = chatMessagesRef.onSnapshot((snapshots) => {
       snapshots.docChanges().forEach((change) => {
@@ -238,9 +239,9 @@ function* createNewChatThread({ payload }) {
   try {
     yield call([chatsRef, chatsRef.set], { participants: { [uid1]: true } }, { merge: true });
     yield put({ type: INIT_CHAT_THREAD_SUCCESS });
-    const task = yield fork(watchFetchChatMessageChannel, docId);
-    yield take(STOP_FETCH_CHAT_MESSAGE_REQUEST);
-    yield cancel(task);
+    // const task = yield fork(watchFetchChatMessageChannel, docId);
+    // yield take(STOP_FETCH_CHAT_MESSAGE_REQUEST);
+    // yield cancel(task);
   } catch (e) {
     yield put({ type: INIT_CHAT_THREAD_FAIL, payload: e.message });
   }
@@ -287,7 +288,7 @@ export function* watchCheckSeenMessageRequest() {
 // -------------------------------------------
 
 function* sendMessage({ payload }) {
-  const { chatDocId, senderid, body } = payload;
+  const { chatDocId, senderId, body } = payload;
   const chatRef = firestore
     .collection('chats')
     .doc(chatDocId)
@@ -295,7 +296,7 @@ function* sendMessage({ payload }) {
 
   try {
     yield call([chatRef, chatRef.add], {
-      senderid,
+      senderId,
       body,
       seen: false,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),

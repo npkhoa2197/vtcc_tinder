@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     backgroundColor: '#FFF',
   },
   innerContainer: {
-    justifyContent: 'flex-start',
+    flex: 1,
     alignSelf: 'flex-start',
     backgroundColor: '#FFF',
     paddingLeft: 22,

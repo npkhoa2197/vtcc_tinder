@@ -4,21 +4,15 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ChatRequestItem from '../../../../components/chatComponents/ChatRequestItem';
 import { styles } from './styles';
-import { requestFetchChatRequest } from '../../../../actions/chatActions';
 
 class ChatRequestScreen extends React.PureComponent {
   static propTypes = {
     pendingChats: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
-      lastMsg: PropTypes.string.isRequired,
-      status: PropTypes.string.isRequired,
+      avatar: PropTypes.string.isRequired,
     })).isRequired,
-    requestFetchChatRequest: PropTypes.func.isRequired,
   };
-  componentDidMount() {
-    this.props.requestFetchChatRequest();
-  }
 
   keyExtractor = item => item.id;
 
@@ -55,8 +49,4 @@ const mapStateToProps = state => ({
   pendingChats: state.chat.pendingChats,
 });
 
-const mapDispatchToProps = dispatch => ({
-  requestFetchChatRequest: () => dispatch(requestFetchChatRequest()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ChatRequestScreen);
+export default connect(mapStateToProps, null)(ChatRequestScreen);

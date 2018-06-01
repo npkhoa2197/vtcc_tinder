@@ -2,34 +2,70 @@ import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import { withNavigation } from 'react-navigation';
+import { connect } from 'react-redux';
+import firebase from 'firebase';
 import MyButton from '../../common/MyButton';
 import { styles } from './styles';
+import { convertSeconds } from '../../../helpers/convertTime';
+import { requestCreateNewChatThread } from '../../../actions/chatActions';
+import { CHAT_MESSAGE_DETAIL_SCREEN } from '../../../constants/strings/screenNames';
+import chatIdCreator from '../../../helpers/chatIdCreator';
 
 const chatRequestAcceptIcon = require('../../../assets/images/chatScreens/chatRequestAcceptIcon.png');
 const chatRequestDeclineIcon = require('../../../assets/images/chatScreens/chatRequestDeclineIcon.png');
 
-const ChatRequestItem = (props) => {
-  const {
-    id, avatar, name, requestTime,
-  } = props.item;
+class ChatRequestItem extends React.PureComponent {
+  static propTypes = {
+    item: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      avatar: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+    requestCreateNewChatThread: PropTypes.func.isRequired,
+    navigation: PropTypes.shape({
+      navigate: PropTypes.func.isRequired,
+    }).isRequired,
+  };
 
-  const renderLeftContainer = () => (
-    <View style={styles.leftContainer}>
-      <Image style={styles.avatar} source={{ uri: avatar }} />
-    </View>
-  );
+  handleAcceptPress = () => {
+    const { id, name, avatar } = this.props.item;
+    const { uid } = firebase.auth().currentUser;
+    const uids = id.split('-');
+    const otherId = uid === uids[0] ? uids[1] : uids[0];
+    const chatDocId = chatIdCreator(uid, otherId);
 
-  const renderInnerUpperContainer = () => (
-    <View style={styles.innerUpperContainer}>
-      <View style={styles.nameAndTextContainer}>
-        <Text style={styles.name}>{name}</Text>
-        <Text style={styles.text}> muốn được chat với bạn</Text>
+    this.props.requestCreateNewChatThread(uid, otherId);
+
+    this.props.navigation.navigate(CHAT_MESSAGE_DETAIL_SCREEN, {
+      chatFriendName: name,
+      chatFriendAvatar: avatar,
+      chatDocId,
+    });
+  };
+
+  handleDeclinePress = () => {};
+
+  renderInnerUpperContainer = () => {
+    const { timestamp, name } = this.props.item;
+    const requestTime = convertSeconds(Date.now() - timestamp.seconds * 1000);
+    return (
+      <View style={styles.innerUpperContainer}>
+        <View style={styles.nameAndTextContainer}>
+          <Text style={styles.name}>{name}</Text>
+          <Text style={styles.text}> muốn được chat với bạn</Text>
+        </View>
+        <Text style={styles.time}>{requestTime}</Text>
       </View>
-      <Text style={styles.time}>{requestTime}</Text>
+    );
+  };
+
+  renderLeftContainer = () => (
+    <View style={styles.leftContainer}>
+      <Image style={styles.avatar} source={{ uri: this.props.item.avatar }} />
     </View>
   );
 
-  const renderInnerLowerContainer = () => (
+  renderInnerLowerContainer = () => (
     <View style={styles.innerLowerContainer}>
       <MyButton
         text="Chấp nhận"
@@ -46,6 +82,7 @@ const ChatRequestItem = (props) => {
         paddingLeft={12}
         marginRight={10}
         marginRightIcon={6}
+        onPress={this.handleAcceptPress}
       />
       <MyButton
         text="Từ chối"
@@ -62,38 +99,33 @@ const ChatRequestItem = (props) => {
         paddingLeft={12}
         marginRight={10}
         marginRightIcon={6}
+        onPress={this.handleDeclinePress}
       />
       <Text style={styles.skipText}>Bỏ qua</Text>
     </View>
   );
 
-  const renderRightContainer = () => (
+  renderRightContainer = () => (
     <View style={styles.rightContainer}>
-      {renderInnerUpperContainer()}
-      {renderInnerLowerContainer()}
+      {this.renderInnerUpperContainer()}
+      {this.renderInnerLowerContainer()}
     </View>
   );
 
-  return (
-    <TouchableOpacity onPress={() => props.navigation.navigate('ChatRequestDetailScreen')}>
-      <View style={styles.container}>
-        {renderLeftContainer()}
-        {renderRightContainer()}
-      </View>
-    </TouchableOpacity>
-  );
-};
+  render() {
+    return (
+      <TouchableOpacity onPress={() => this.props.navigation.navigate('ChatRequestDetailScreen')}>
+        <View style={styles.container}>
+          {this.renderLeftContainer()}
+          {this.renderRightContainer()}
+        </View>
+      </TouchableOpacity>
+    );
+  }
+}
 
-ChatRequestItem.propTypes = {
-  item: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    avatar: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    requestTime: PropTypes.string.isRequired,
-  }).isRequired,
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
-};
+const mapDispatchToProps = dispatch => ({
+  requestCreateNewChatThread: (uid1, uid2) => dispatch(requestCreateNewChatThread(uid1, uid2)),
+});
 
-export default withNavigation(ChatRequestItem);
+export default connect(null, mapDispatchToProps)(withNavigation(ChatRequestItem));

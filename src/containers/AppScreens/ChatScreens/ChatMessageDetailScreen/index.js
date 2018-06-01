@@ -33,7 +33,7 @@ const sendButtonIcon = require('../../../../assets/images/chatScreens/sendButton
 class ChatMessageDetailScreen extends React.PureComponent {
   static propTypes = {
     messages: PropTypes.arrayOf(PropTypes.shape({
-      senderid: PropTypes.string.isRequired,
+      senderId: PropTypes.string.isRequired,
       body: PropTypes.string.isRequired,
       seen: PropTypes.bool.isRequired,
     })).isRequired,
@@ -48,9 +48,10 @@ class ChatMessageDetailScreen extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this.chatFriendName = this.props.navigation.getParam('chatFriendName');
     this.chatFriendAvatar = this.props.navigation.getParam('chatFriendAvatar');
     this.chatDocId = this.props.navigation.getParam('chatDocId');
+    this.chatFriendName = this.props.navigation.getParam('chatFriendName');
+
     this.currentUid = firebase.auth().currentUser.uid;
 
     this.state = {
@@ -63,10 +64,6 @@ class ChatMessageDetailScreen extends React.PureComponent {
     if (this.props.messages.length === 0) {
       this.props.requestChatMessages(this.chatDocId);
     }
-  }
-
-  componentDidUpdate() {
-    this.messageListRef.scrollToEnd();
   }
 
   onLongPress = () => {
@@ -198,8 +195,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   requestChatMessages: chatDocId => dispatch(requestFetchChatMessage(chatDocId)),
   stopRequestChatMessages: () => dispatch(stopRequestFetchChatMessage()),
-  requestSendMessage: (chatDocId, senderid, body, timestamp) =>
-    dispatch(requestSendMessage(chatDocId, senderid, body, timestamp)),
+  requestSendMessage: (chatDocId, senderId, body, timestamp) =>
+    dispatch(requestSendMessage(chatDocId, senderId, body, timestamp)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatMessageDetailScreen);

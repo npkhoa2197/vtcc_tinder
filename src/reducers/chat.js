@@ -73,6 +73,14 @@ const chat = (
         chats: { ...state.chats, isThreadCreated: false },
       };
     case CHAT_MESSAGE_ADDED:
+      if (state.chats.messages[0]) {
+        if (state.chats.messages[0].timestamp > action.payload.timestamp) {
+          return {
+            ...state,
+            chats: { ...state.chats, messages: [action.payload, ...state.chats.messages] },
+          };
+        }
+      }
       return {
         ...state,
         chats: { ...state.chats, messages: [...state.chats.messages, action.payload] },
