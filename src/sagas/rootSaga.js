@@ -1,17 +1,26 @@
 import { all } from 'redux-saga/effects';
-import { watchLogin } from './loginSagas';
-import { watchFriendsRequest, watchMyFriendsRequest } from './friendsSagas';
-import { watchFetchHotgirls } from './hotgirlsSagas';
-import { watchCommentsRequest } from './hotgirlCommentsSagas';
-import { watchChatRequest } from './chatSagas';
+import { watchRegister, watchLogin, watchLogout } from './loginSagas';
+import { watchFetchUsers } from './usersSagas';
+import {
+  watchFetchActiveMessageRequest,
+  watchFetchChatRequestRequest,
+  watchCreateNewChatThreadRequest,
+  watchFetchChatMessageRequest,
+  watchCheckSeenMessageRequest,
+  watchSendMessageRequest,
+} from './chatSagas';
 
 export default function* rootSaga() {
   yield all([
+    watchRegister(),
     watchLogin(),
-    watchFriendsRequest(),
-    watchMyFriendsRequest(),
-    watchFetchHotgirls(),
-    watchCommentsRequest(),
-    watchChatRequest(),
+    watchLogout(),
+    watchFetchUsers(),
+    watchFetchActiveMessageRequest(),
+    watchFetchChatRequestRequest(),
+    watchCreateNewChatThreadRequest(),
+    watchFetchChatMessageRequest(),
+    watchCheckSeenMessageRequest(),
+    watchSendMessageRequest(),
   ]);
 }

@@ -1,0 +1,4 @@
+export const MESSAGE_STATUS_PENDING = 'MSG_PENDING';
+export const MESSAGE_STATUS_SENT = 'MSG_SENT';
+export const MESSAGE_STATUS_SEEN = 'MSG_SEEN';
+export const MESSAGE_STATUS_ERROR = 'MSG_ERROR';
